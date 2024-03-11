@@ -64,7 +64,6 @@ jobs:
         run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
 
       # uploads the coverage-report.md artifact  # Optional
-
       - name: Upload Code Coverage Artifacts
         uses: actions/upload-artifact@v2
         with:
