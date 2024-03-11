@@ -93,7 +93,7 @@ class CityTrackerServiceImplTest {
 				.totalCounter(citySearchTracker.getTotalCount())
 				.build());
 		});
-		assertEquals(cityTrackerResponses.size(), 3);
+		assertEquals(3, cityTrackerResponses.size());
 	}
 
 	@Test
@@ -111,7 +111,7 @@ class CityTrackerServiceImplTest {
 				.totalCounter(citySearchTracker.getTotalCount())
 				.build());
 		});
-		assertEquals(cityTrackerResponses.size(), 1);
+		assertEquals(1, cityTrackerResponses.size());
 	}
 
 	@Test
@@ -133,15 +133,15 @@ class CityTrackerServiceImplTest {
 	@DisplayName("Positive Scenario: Increment City Tracker")
 	void incrementCityTrackerPositiveScenario() {
 		// Verify the initial count
-		assertEquals(cityTrackerService.getCityTracker("Edmonton").get().getNameCount(), 12);
-		assertEquals(cityTrackerService.getCityTracker("Edmonton").get().getTotalCounter(), 16);
+		assertEquals(12, cityTrackerService.getCityTracker("Edmonton").get().getNameCount());
+		assertEquals(16, cityTrackerService.getCityTracker("Edmonton").get().getTotalCounter());
 
 		cityTrackerService.incrementCityTracker("Edmonton", CityTrackerMode.NAME);
 		Optional<CityTrackerResponse> cityTrackerResponse = cityTrackerService.getCityTracker("Edmonton");
 
 		// Verify the incremented count
-		assertEquals(cityTrackerResponse.get().getNameCount(), 13);
-		assertEquals(cityTrackerResponse.get().getTotalCounter(), 17);
+		assertEquals(13, cityTrackerResponse.get().getNameCount());
+		assertEquals(17, cityTrackerResponse.get().getTotalCounter());
 	}
 
 	@Test
@@ -164,8 +164,8 @@ class CityTrackerServiceImplTest {
 		Optional<CityTrackerResponse> cityTrackerResponse = cityTrackerService.getCityTracker("Edmonton");
 
 		// Verify the incremented count
-		assertEquals(cityTrackerResponse.get().getZipCodeCount(), 1);
-		assertEquals(cityTrackerResponse.get().getTotalCounter(), 17);
+		assertEquals(1, cityTrackerResponse.get().getZipCodeCount());
+		assertEquals(17, cityTrackerResponse.get().getTotalCounter());
 	}
 
 	@Test

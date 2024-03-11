@@ -9,6 +9,10 @@ import java.util.regex.Pattern;
  */
 public class RequestValidationUtil {
 
+	private RequestValidationUtil() {
+		// Private constructor to hide the implicit public one
+	}
+
 	public static void validateCityName(String cityName) {
 		if (cityName == null || cityName.trim().isEmpty()) {
 			throw new ParameterValidationException("City name is required");
