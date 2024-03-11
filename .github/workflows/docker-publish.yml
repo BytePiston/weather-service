@@ -36,4 +36,4 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           push: true
-          tags: user/app:latest
+          tags: neel0108p/weather-station:latest
