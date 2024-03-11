@@ -27,6 +27,20 @@
         <sonar.jacoco.plugin>1.3.0.1538</sonar.jacoco.plugin>
         <sonar.maven.plugin.version>3.10.0.2594</sonar.maven.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+        <sonar.exclusions>
+            **/com/verdant/weather/service/config/*.java,
+            **/com/verdant/weather/service/event/*.java,
+            **/com/verdant/weather/service/config/*.java,
+            **/com/verdant/weather/service/exception/*.java,
+            **/com/verdant/weather/service/model/*.java
+        </sonar.exclusions>
+        <sonar.coverage.exclusions>
+            **/com/verdant/weather/service/entity/*.java,
+            **/com/verdant/weather/service/event/*.java,
+            **/com/verdant/weather/service/config/*.java,
+            **/com/verdant/weather/service/exception/*.java,
+            **/com/verdant/weather/service/model/*.java
+        </sonar.coverage.exclusions>
     </properties>
     <dependencies>
         <dependency>
@@ -124,6 +138,11 @@
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <version>${jacoco.version}</version>
+                <configuration>
+                    <excludes>
+                        <exclude>${sonar.exclusions}</exclude>
+                    </excludes>
+                </configuration>
                 <executions>
                     <execution>
                         <goals>

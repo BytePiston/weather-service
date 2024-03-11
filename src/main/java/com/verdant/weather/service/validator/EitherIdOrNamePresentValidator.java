@@ -8,6 +8,7 @@ public class EitherIdOrNamePresentValidator implements ConstraintValidator<Eithe
 
 	@Override
 	public void initialize(EitherIdOrNamePresent constraintAnnotation) {
+		// No initialization needed
 	}
 
 	@Override

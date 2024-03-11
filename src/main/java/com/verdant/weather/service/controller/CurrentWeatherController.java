@@ -90,25 +90,17 @@ public class CurrentWeatherController {
 		if (id.isPresent()) {
 			try {
 				RequestValidationUtil.validateCityId(id.get());
+				Optional<WeatherResponse> weatherResponse = weatherService.getCurrentWeatherByCityId(id.get());
+				return prepareWeatherResponse(weatherResponse);
 			}
 			catch (ParameterValidationException e) {
 				errorMessages.add(e.getMessage());
-			}
-
-			if (errorMessages.isEmpty()) {
-				Optional<WeatherResponse> weatherResponse = weatherService.getCurrentWeatherByCityId(id.get());
-				return prepareWeatherResponse(weatherResponse);
 			}
 		}
 		else {
 			try {
 				RequestValidationUtil.validateCityName(name.get());
-			}
-			catch (ParameterValidationException e) {
-				errorMessages.add(e.getMessage());
-			}
-			if (stateCode.isPresent() && countryCode.isPresent() && errorMessages.isEmpty()) {
-				try {
+				if (stateCode.isPresent() && countryCode.isPresent()) {
 					RequestValidationUtil.validateStateCode(stateCode.get());
 					RequestValidationUtil.validateCountryCode(countryCode.get());
 					Optional<WeatherResponse> weatherResponse = weatherService
@@ -116,24 +108,19 @@ public class CurrentWeatherController {
 								countryCode.get());
 					return prepareWeatherResponse(weatherResponse);
 				}
-				catch (ParameterValidationException e) {
-					errorMessages.add(e.getMessage());
-				}
-			}
-			else if (countryCode.isPresent() && errorMessages.isEmpty()) {
-				try {
+				else if (countryCode.isPresent()) {
 					RequestValidationUtil.validateCountryCode(countryCode.get());
 					Optional<WeatherResponse> weatherResponse = weatherService
 						.getCurrentWeatherByCityNameAndCountryCode(name.get(), countryCode.get());
 					return prepareWeatherResponse(weatherResponse);
 				}
-				catch (ParameterValidationException e) {
-					errorMessages.add(e.getMessage());
+				else {
+					Optional<WeatherResponse> weatherResponse = weatherService.getCurrentWeatherByCityName(name.get());
+					return prepareWeatherResponse(weatherResponse);
 				}
 			}
-			else if (errorMessages.isEmpty()) {
-				Optional<WeatherResponse> weatherResponse = weatherService.getCurrentWeatherByCityName(name.get());
-				return prepareWeatherResponse(weatherResponse);
+			catch (ParameterValidationException e) {
+				errorMessages.add(e.getMessage());
 			}
 		}
 
