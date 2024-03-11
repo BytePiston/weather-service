@@ -73,10 +73,10 @@ class SearchTrackerControllerTest {
         String content = result.getResponse().getContentAsString();
         JsonNode node = objectMapper.readTree(content);
         assertTrue(node.isArray());
-        assertTrue(node.size() == 3);
-        assertTrue(node.get(0).get("name").asText().equals("Edmonton"));
-        assertTrue(node.get(1).get("name").asText().equals("Hudson"));
-        assertTrue(node.get(2).get("name").asText().equals("Leitchfield"));
+        assertEquals(3, node.size());
+        assertEquals("Edmonton", node.get(0).get("name").asText());
+        assertEquals("Hudson", node.get(1).get("name").asText());
+        assertEquals("Leitchfield", node.get(2).get("name").asText());
     }
 
 	@Test
@@ -89,8 +89,8 @@ class SearchTrackerControllerTest {
         String content = result.getResponse().getContentAsString();
         JsonNode node = objectMapper.readTree(content);
         assertTrue(node.isArray());
-        assertTrue(node.size() == 1);
-        assertTrue(node.get(0).get("name").asText().equals("Edmonton"));
+        assertEquals(1, node.size());
+        assertEquals("Edmonton", node.get(0).get("name").asText());
     }
 
 	@Test
@@ -103,7 +103,7 @@ class SearchTrackerControllerTest {
         String content = result.getResponse().getContentAsString();
         JsonNode node = objectMapper.readTree(content);
         assertTrue(node.isArray());
-        assertTrue(node.size() == 1);
+        assertEquals(1, node.size());
         assertEquals("City Not Found", node.get(0).get("message").asText());
     }
 
@@ -117,7 +117,7 @@ class SearchTrackerControllerTest {
         String content = result.getResponse().getContentAsString();
         JsonNode node = objectMapper.readTree(content);
         assertTrue(node.isArray());
-        assertTrue(node.size() == 0);
+        assertEquals(0, node.size());
     }
 
 }
