@@ -27,13 +27,13 @@
         <sonar.jacoco.plugin>1.3.0.1538</sonar.jacoco.plugin>
         <sonar.maven.plugin.version>3.10.0.2594</sonar.maven.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
-        <sonar.exclusions>
+        <sonar.coverage.exclusions>
             **/entity/*.java,
             **/event/*.java,
             **/config/*.java,
             **/exception/*.java,
             **/model/*.java
-        </sonar.exclusions>
+        </sonar.coverage.exclusions>
     </properties>
     <dependencies>
         <dependency>
