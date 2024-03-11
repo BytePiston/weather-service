@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+  #  MySQL DB config
+  weather-service-mysql:
+    image: mysql:latest
+    restart: always
+    container_name: weather-service-mysql
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: test
+      MYSQL_DATABASE: weather-service
+    ports:
+      - "3306:3306"
+    networks:
+      - weather-service-network
+    healthcheck:
+      test: [ "CMD", "mysqladmin" ,"ping", "-h", "localhost" ]
+      interval: 10s
+      timeout: 20s
+      retries: 10
+
+  weather-service:
+    #    image: neel0108p/weather-service
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    container_name: weather-service
+    depends_on:
+      weather-service-mysql:
+        condition: service_healthy
+    links:
+      - weather-service-mysql
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://weather-service-mysql:3306/weather-service
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=test
+      - openweathermap.api.key=cf002751564a4c78f5f7ed479f1b9ba3
+    ports:
+      - "8080:8080"
+    networks:
+      - weather-service-network
+
+networks:
+  weather-service-network:
+    driver: bridge

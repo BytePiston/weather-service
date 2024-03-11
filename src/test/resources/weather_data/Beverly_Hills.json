@@ -1,0 +1,43 @@
+{
+  "coord": {
+    "lon": -118.4065,
+    "lat": 34.0901
+  },
+  "weather": [
+    {
+      "id": 800,
+      "main": "Clear",
+      "description": "clear sky",
+      "icon": "01n"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 288.24,
+    "feels_like": 287.79,
+    "temp_min": 285.82,
+    "temp_max": 291.48,
+    "pressure": 1013,
+    "humidity": 76
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 5.66,
+    "deg": 260
+  },
+  "clouds": {
+    "all": 0
+  },
+  "dt": 1710037823,
+  "sys": {
+    "type": 2,
+    "id": 2082254,
+    "country": "US",
+    "sunrise": 1709993488,
+    "sunset": 1710035805
+  },
+  "timezone": -28800,
+  "id": 0,
+  "name": "Beverly Hills",
+  "cod": 200
+}

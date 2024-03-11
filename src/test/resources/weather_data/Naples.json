@@ -1,0 +1,47 @@
+{
+  "coord": {
+    "lon": -77.3901,
+    "lat": 42.6404
+  },
+  "weather": [
+    {
+      "id": 500,
+      "main": "Rain",
+      "description": "light rain",
+      "icon": "10n"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 278.26,
+    "feels_like": 277.44,
+    "temp_min": 276.82,
+    "temp_max": 279.49,
+    "pressure": 1000,
+    "humidity": 62
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 1.34,
+    "deg": 197,
+    "gust": 3.58
+  },
+  "rain": {
+    "1h": 0.82
+  },
+  "clouds": {
+    "all": 100
+  },
+  "dt": 1710038237,
+  "sys": {
+    "type": 2,
+    "id": 2010118,
+    "country": "US",
+    "sunrise": 1709983872,
+    "sunset": 1710025737
+  },
+  "timezone": -18000,
+  "id": 0,
+  "name": "Naples",
+  "cod": 200
+}
