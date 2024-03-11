@@ -59,6 +59,19 @@ jobs:
           fail_below_threshold: false
           publish_only_summary: false
 
+      - name: Jacoco Report to PR
+        id: jacoco
+        uses: madrapps/jacoco-report@v1.6.1
+        with:
+          paths: 'target/site/jacoco/jacoco.xml'
+          token: ${{ secrets.GITHUB_TOKEN }}
+          min-coverage-overall: 40
+          min-coverage-changed-files: 60
+          debug-mode: true
+          title: '# :lobster: Coverage Report'
+          pass-emoji: ':green_circle:'
+          fail-emoji: ':red_circle:'
+
       # Publish Coverage Job Summary  # Optional
       - name: Add Coverage Job Summary
         run: echo "${{ steps.jacoco_reporter.outputs.coverageSummary }}" >> $GITHUB_STEP_SUMMARY
