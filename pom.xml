@@ -32,7 +32,7 @@
             **/event/*.java,
             **/config/*.java,
             **/exception/*.java,
-            **/model/*.java,
+            **/model/*.java
         </sonar.exclusions>
     </properties>
     <dependencies>
