@@ -123,10 +123,6 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <configuration>
-                    <destFile>${sonar.jacoco.xmlReportPaths}</destFile>
-                    <append>true</append>
-                </configuration>
                 <version>${jacoco.version}</version>
                 <executions>
                     <execution>
