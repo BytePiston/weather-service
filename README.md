@@ -10,7 +10,6 @@ Java application built with Spring Boot and Maven. It allows users to retrieve c
 - [API Documentation](#api-documentation)
 - [Current Weather Endpoints](#current-weather-endpoints)
 - [Search Tracker Endpoints](#search-tracker-endpoints)
-- [Caching](#caching)
 - [Testing](#testing)
 - [Deployment and CI Pipeline](#deployment-and-ci-pipeline)
 - [Design Decisions](#design-decisions)
@@ -43,14 +42,17 @@ Before you begin, ensure you have the following prerequisites installed:
 1. Clone the repository:
    ```bash 
    git clone https://github.com/BytePiston/weather-service
-   
+    ```
+      
 2. Navigate to the project directory:
     ```bash 
     cd weather-service
-
+    ```
+   
 3. If you have Docker installed, you can use Docker Compose to start the application:
     ```bash
     docker compose up --build
+    ```
 
 ## API Documentation
 
@@ -58,8 +60,9 @@ The Weather Service application uses Swagger for API documentation. Before makin
 
 You can access the Swagger UI at the following URL when running the application locally:
 
-    ```bash
+```bash
     http://localhost:8080/swagger-ui.html
+  ```
 
 ## Current Weather Endpoints
 
@@ -70,31 +73,38 @@ To retrieve weather information, make a GET request to the appropriate endpoint 
 - **To get weather by city ID:** This endpoint requires the ID of the city as a parameter. The ID should be a string value: 
    ```bash 
    GET api/v1/current/weather/city?id={id}
+    ```
   
 - **To get weather by city name**: This endpoint requires the name of the city as a parameter. The name should be a string value:
    ```bash
    GET api/v1/current/weather/city?name={cityName}
+    ```
   
 - **To get weather by city name and state code**: This endpoint requires the name of the city and the state code as parameters. Both should be string values:
    ```bash
   GET api/v1/current/weather/city?name={cityName}&stateCode={stateCode}
-   
+    ```
+  
 - **To get weather by city name, state code, and country code**: This endpoint requires the name of the city, the state code, and the country code as parameters. All should be string values: 
    ```bash
   GET api/v1/current/weather/city?name={cityName}&stateCode={stateCode}&countryCode={countryCode}
-  
+    ```
+    
 - **To get weather by zip code**: This endpoint requires the zip code as a parameter. The zip code should be a string value:
    ```bash
   GET api/v1/current/weather/zip?zipCode={zipCode}
-  
+    ```
+    
 - **To get weather by zip code and country code**: This endpoint requires the zip code and the country code as parameters. Both should be string values:
    ```bash
    GET api/v1/current/weather/zip?zipCode={zipCode}&countryCode={countryCode}
-  
+    ```  
+
 - **To get weather by coordinates**: This endpoint requires the latitude and longitude as parameters. Both should be double values:
    ```bash
    GET api/v1/current/weather/coordinates?latitude={latitude}&longitude={longitude}
-
+    ```
+  
 #### NOTE: The application also supports POST as GET methods to retrieve the current weather. These methods are not required for the current implementation but can be used for future enhancements. The request body should be a JSON object with the required parameters. For example:
 
 - **To get weather by city parameters**: This endpoint requires a JSON object with either the ID or the name of the city as required parameters. The state code and the country code are optional parameters:
@@ -109,7 +119,7 @@ To retrieve weather information, make a GET request to the appropriate endpoint 
     "stateCode":"{stateCode}", // Optional Parameter
     "countryCode":"{countryCode}" // Optional Parameter
    }
-
+    ```
 - **To get weather by zip code parameters**: This endpoint requires a JSON object with the zip code as a required parameter. The country code is an optional parameter:
 
    ```bash
@@ -121,7 +131,7 @@ To retrieve weather information, make a GET request to the appropriate endpoint 
     "zipCode": "{zipCode}", // Required Parameter
     "countryCode":"{countryCode}" // Optional Parameter
    }
-
+    ```
 - **To get weather by coordinates parameters**: This endpoint requires a JSON object with the latitude and longitude as required parameters:
 
    ```bash
@@ -133,8 +143,59 @@ To retrieve weather information, make a GET request to the appropriate endpoint 
     "latitude": "{latitude}", // Required Parameter
     "longitude":"{longitude}" // Required Parameter
    }
+    ```
+#### Current Weather Endpoint Sample API Response:
 
-## Search Tracker Endpoints
+```bash
+    {
+    "currentWeather": {
+        "coord": {
+            "lon": -113.4687,
+            "lat": 53.5501
+        },
+        "weather": [
+            {
+                "id": 801,
+                "main": "Clouds",
+                "description": "few clouds",
+                "icon": "02d"
+            }
+        ],
+        "base": "stations",
+        "main": {
+            "temp": 7.88,
+            "feels_like": 6.26,
+            "temp_min": 6.44,
+            "temp_max": 8.32,
+            "pressure": 1004,
+            "humidity": 48
+        },
+        "visibility": 10000,
+        "wind": {
+            "speed": 2.57,
+            "deg": 50
+        },
+        "clouds": {
+            "all": 20
+        },
+        "dt": 1710196118,
+        "sys": {
+            "type": 1,
+            "id": 642,
+            "country": "CA",
+            "sunrise": 1710165405,
+            "sunset": 1710207053
+        },
+        "timezone": -21600,
+        "id": 5946768,
+        "name": "Edmonton",
+        "cod": 200
+    },
+    "message": "SUCCESS"
+}
+  ```
+
+## Search Tracker Endpoints: Provides Analytics for Weather Data Searches 
 
 The Weather Service application provides endpoints for tracking the number of times a city's weather data is searched for by id, name, zip code, or coordinates. This feature supports analytics by incrementing the count for each search parameter every time a weather data request is made. Users can view the total count for a city and the count for each search parameter.
 
@@ -150,30 +211,85 @@ The `SearchTrackerController` class in the `com.verdant.weather.service.controll
 - `page`: The page number for pagination. This is an optional field with a default value of 0.
 - `pageSize`: The number of entries per page for pagination. This is an optional field with a default value of 10.
 
-#### Response
+#### Search Tracker Endpoint Sample API Response:
 
-The endpoint returns a list of `CityTrackerResponse` objects, which contain the analytical data for city search tracking based on the search criteria. The response also includes an error message if any.
+```bash
+GET: /api/v1/tracker/city?name={cityName}
 
-#### Supported API Requests:
+[
+    {
+        "name": "edmonton",
+        "idCount": 2,
+        "nameCount": 7,
+        "zipCodeCount": 0,
+        "totalCounter": 9
+    }
+]
+````
+
+```bash
+GET: /api/v1/tracker/city
+
+[
+    {
+        "name": "Edmonton",
+        "idCount": 2,
+        "nameCount": 7,
+        "zipCodeCount": 0,
+        "totalCounter": 9
+    },
+    {
+        "name": "Hudson",
+        "idCount": 0,
+        "nameCount": 0,
+        "zipCodeCount": 4,
+        "totalCounter": 4
+    },
+    {
+        "name": "Leitchfield",
+        "idCount": 0,
+        "nameCount": 0,
+        "zipCodeCount": 0,
+        "totalCounter": 2
+    }
+]
+```
 
 ## Search Tracker Endpoints
+
+#### Supported API Requests:
 
 - **To get city search tracker data for all cities**: This endpoint retrieves analytical data for all cities. It tracks the number of times each city's weather data has been searched for by id, name, zip code, or coordinates. This endpoint does not require any parameters:
     ```bash
     GET: /api/v1/tracker/city
-
+    ```
+  
 - **To get city search tracker data with pagination**: This endpoint retrieves analytical data for all cities with pagination. The page number and the number of entries per page are required as parameters. Both should be integer values. The page number starts from 0 and the page size determines the number of entries per page:
     ```bash
     GET: /api/v1/tracker/city?page=0&pageSize=10
-
+    ```
 - **To get city search tracker data for a specific city**: This endpoint retrieves analytical data for a specific city. It requires the name of the city as a parameter. The name should be a string value. It tracks the number of times the specified city's weather data has been searched for by id, name, zip code, or coordinates:
     ```bash
     GET: /api/v1/tracker/city?name=cityName
-
+    ```
+  
 - **To get city search tracker data for a specific city with pagination**: This endpoint retrieves analytical data for a specific city with pagination. It requires the name of the city, the page number, and the number of entries per page as parameters. The name should be a string value, and the page number and the number of entries per page should be integer values. The page number starts from 0 and the page size determines the number of entries per page:
     ```bash
     GET: /api/v1/tracker/city?name=cityName&page=0&pageSize=10
+    ```  
 
+#### Sample API Response:
+
+```bash
+    {
+      "cityName": "string",
+      "totalSearchCount": 0,
+      "searchCountByCityId": 0,
+      "searchCountByCityName": 0,
+      "searchCountByZipCode": 0,
+      "searchCountByCoordinates": 0
+    }
+  ```
 Please note that the Search Tracker API is for internal use only and is not exposed to end users.
 
 ## Testing
@@ -183,7 +299,8 @@ This project uses a comprehensive testing approach to ensure reliability and rob
 1. **JUnit**: Unit tests have been added to test the Controllers, Services, and other functional classes. These tests ensure that each unit of the application works as expected independently. The extensive coverage of unit tests in this project demonstrates a commitment to quality and reliability. To run the JUnit tests, use the command:
     ```bash
     mvn test
-
+    ```
+   
 2. **Postman**: A Postman collection has been added for automated testing of the API endpoints. This collection includes around 200 test cases that cover both positive and negative scenarios for each endpoint. The extensive number of test cases in the Postman collection reflects the effort put into ensuring that the API behaves as expected under a wide range of conditions. It's recommended to familiarize yourself with this Postman collection to understand the full range of functionality and edge cases for each endpoint. To test the API endpoints, you can import the Postman collection included in the repository and run the requests.
 
 3. **Running Postman Collection with Newman and Environment Variables**: Newman is a command-line collection runner for Postman. It allows you to run and test a Postman collection directly from the command-line. You can also specify an environment file to use environment variables in your tests.
@@ -206,11 +323,16 @@ Replace `path_to_your_postman_collection.json` and `path_to_your_postman_environ
 
 Below are some screenshots of the test cases for this project:
 
-![Maven Build Result with Junit Pass Status](path_to_screenshot_1.png)
-Maven Build Result with Junit Pass Status
 
-![Postman Collection Execution Report](path_to_screenshot_2.png)
-Postman Collection  Execution Report
+<img src="./screenshots/maven_build_with_junit_pass_status.png" width="1000" height="400">
+
+**Maven Build Result with Junit Pass Status**
+
+
+<img src="./screenshots/postman_collection_execution_report.png" width="600" height="400">
+
+**Postman Collection  Execution Report**
+
 
 ## Deployment and CI Pipeline
 
@@ -239,14 +361,30 @@ To see the results of the CI pipeline, go to the `Actions` tab in the GitHub rep
 
 Below are some screenshots of the CI pipeline for this project:
 
-![SonarQube Analysis in CI Pipeline](path_to_screenshot_3.png)
-SonarQube Analysis in CI Pipeline
 
-![Docker Image Publishing in CI Pipeline](path_to_screenshot_4.png)
-Docker Image Publishing in CI Pipeline
+<img src="./screenshots/build_analyze_ci.png" width="1000" height="600">
 
-![PR Status Checks](path_to_screenshot_5.png)
-PR Status Checks
+**Maven Build and Test in CI Pipeline**
+
+
+<img src="./screenshots/jacoco_code_coverage_ci.png" width="300" height="400">
+
+**JaCoCo Code Coverage Report in CI Pipeline**
+
+<img src="./screenshots/sonarqube_status_ci.png" width="800" height="400">
+
+**SonarQube Analysis in CI Pipeline**
+
+
+<img src="./screenshots/docker_ci.png" width="1000" height="400">
+
+**Docker Image Publishing in CI Pipeline**
+
+
+<img src="./screenshots/pr_status_check_ci.png" width="1000" height="600">
+
+**PR Status Checks has to pass before merging else PR will not be allowed to merge**
+
 
 ## Design Decisions
 
@@ -254,21 +392,40 @@ PR Status Checks
 
 The application supports POST as GET methods to retrieve the current weather. These methods are not required for the current implementation but can be used for future enhancements. The request body should be a JSON object with the required parameters. This design decision was made to provide flexibility in how the API is used and to allow for more complex queries in the future.
 
-### Use of Model Classes
+### Use of Request and Response Model Classes
 
-The use of model classes for the POST as GET methods contributes to the flexibility and modularity of the application, making it easier to accommodate future enhancements. Here's how:
+The use of `Request Model` classes for the `POST as GET` operation and the `Weather Response Model` contributes to the flexibility and modularity of the application, making it easier to accommodate future enhancements. Here's how:
 
-1. **Separation of Concerns**: By using model classes to encapsulate the data for each request, the application separates the concerns of data handling from the business logic in the controller. This makes the code easier to understand and maintain.
+1. **Separation of Concerns**: By using model classes to encapsulate the data for each request and response, the application separates the concerns of data handling from the business logic in the controller and service. This makes the code easier to understand and maintain.
 
 2. **Code Reusability**: Model classes can be reused across different parts of the application. If a new feature requires the same data structure, the existing model class can be used instead of creating a new one.
 
-3. **Ease of Modification**: If the data requirements for a request change in the future, only the model class needs to be updated. The controller and other parts of the application that use the model class will automatically get the updated data structure.
+3. **Ease of Modification**: If the data requirements for a request or response change in the future, only the relevant model class needs to be updated. The controller, service, and other parts of the application that use the model class will automatically get the updated data structure.
 
-4. **Validation**: Model classes can include validation logic to ensure that the data is in the correct format before it is processed by the controller. This helps to catch errors early and improves the robustness of the application.
+4. **Validation**: Request model classes can include validation logic to ensure that the data is in the correct format before it is processed by the controller. This helps to catch errors early and improves the robustness of the application.
 
-5. **Documentation and Communication**: Model classes serve as a form of documentation, clearly showing what data is required for each request. This makes it easier for developers to understand the API and for teams to communicate about the application's requirements.
+5. **Flexibility**: Response model classes provide flexibility in how the API responses are structured. This is particularly useful when dealing with APIs like OpenWeatherMap, where the response data can be quite complex. By mapping the API response to a model class, the application can easily extract and use the data it needs.
+
+6. **Documentation and Communication**: Both request and response model classes serve as a form of documentation, clearly showing what data is required for each request and what data is included in each response. This makes it easier for developers to understand the API and for teams to communicate about the application's requirements.
 
 In the provided `CurrentWeatherController` class, the `CityRequestModel`, `ZipCodeRequestModel`, and `CoordinateRequestModel` are used to encapsulate the data for the POST as GET methods. These model classes make the application more flexible and modular, and they will be instrumental in accommodating future enhancements.
+
+Similarly, in the `WeatherModel` class, the nested static classes like `Coord`, `Weather`, `Main`, `Wind`, `Rain`, `Clouds`, and `Sys` are used to encapsulate the data for the weather response. These model classes make the application more flexible and modular, and they will be instrumental in accommodating future enhancements.
+In the provided `CurrentWeatherController` class, the `CityRequestModel`, `ZipCodeRequestModel`, and `CoordinateRequestModel` are used to encapsulate the data for the POST as GET methods. These model classes make the application more flexible and modular, and they will be instrumental in accommodating future enhancements.
+
+### Use of OpenWeatherMap API Response Structure in WeatherModel
+
+The `WeatherModel` class in this application is designed to mirror the response structure of the OpenWeatherMap API. This design decision was made for several reasons:
+
+1. **Consistency**: By keeping the structure of the `WeatherModel` class similar to the OpenWeatherMap API response, the application maintains consistency with the API it is consuming. This makes it easier for developers who are familiar with the OpenWeatherMap API to understand the structure of the `WeatherModel` class.
+
+2. **Ease of Integration**: Developers using this application as a service can easily integrate it with other services that consume the OpenWeatherMap API. Since the response structure is the same, they can reuse their existing data handling logic.
+
+3. **Flexibility**: The `WeatherModel` class includes all the data fields provided by the OpenWeatherMap API. Even though the current implementation of the application may not use all these fields, they are available for future enhancements. This makes the application more flexible and adaptable to changing requirements.
+
+4. **Transparency**: By using the same response structure, the application provides complete transparency about the data it is returning. Developers can refer to the OpenWeatherMap API documentation to understand the data fields in the `WeatherModel` class.
+
+In the `WeatherModel` class, the nested static classes like `Coord`, `Weather`, `Main`, `Wind`, `Rain`, `Clouds`, and `Sys` are used to encapsulate the data for the weather response. These model classes make the application more flexible and modular, and they will be instrumental in accommodating future enhancements.
 
 ### Custom Cache Implementation
 The Weather Service application implements a custom caching mechanism, a standout feature designed to enhance performance and efficiency. This mechanism, implemented using `ConcurrentHashMap`, is tailored to the constraints of the OpenWeatherMap API, which permits 60 requests per minute and refreshes data every 10 minutes. The cache operates with a Time To Live (TTL) strategy, based on the timestamp of the generated weather data.
@@ -290,6 +447,7 @@ The `CachedWeatherMap` class in the `com.verdant.weather.service.config` package
 
 ## TODO and Future Enhancements
 
+- In CityTrackerController and CityTrackerService, add implementation of more endpoints to support additional analytics and tracking features based on provided abstract methods in CitySearchTrackerRepository.
 - Add more junit for Model, Entity classes to increase overall code coverage
 - Run postman collection with Newman and environment variables as part of the CI/CD pipeline to automate testing
 - Add support for additional weather APIs (e.g., Future Weather, Historical Weather, etc.)
