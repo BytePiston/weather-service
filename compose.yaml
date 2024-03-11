@@ -21,7 +21,7 @@ services:
       retries: 10
 
   weather-service:
-    #    image: neel0108p/weather-service
+    image: neel0108p/weather-service
     build:
       context: .
       dockerfile: Dockerfile
