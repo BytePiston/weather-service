@@ -1,0 +1,43 @@
+{
+  "coord": {
+    "lon": -77.3358,
+    "lat": 38.531
+  },
+  "weather": [
+    {
+      "id": 804,
+      "main": "Clouds",
+      "description": "overcast clouds",
+      "icon": "04n"
+    }
+  ],
+  "base": "stations",
+  "main": {
+    "temp": 280.35,
+    "feels_like": 277.65,
+    "temp_min": 279.11,
+    "temp_max": 281.44,
+    "pressure": 1002,
+    "humidity": 92
+  },
+  "visibility": 10000,
+  "wind": {
+    "speed": 4.12,
+    "deg": 330
+  },
+  "clouds": {
+    "all": 100
+  },
+  "dt": 1710038258,
+  "sys": {
+    "type": 1,
+    "id": 5134,
+    "country": "US",
+    "sunrise": 1709983748,
+    "sunset": 1710025834
+  },
+  "timezone": -18000,
+  "id": 0,
+  "name": "Quantico",
+  "cod": 200
+}

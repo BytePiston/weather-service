@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Edmonton",
+    "idCount": 4,
+    "nameCount": 12,
+    "zipCodeCount": 0,
+    "totalCounter": 16
+  },
+  {
+    "name": "Hudson",
+    "idCount": 0,
+    "nameCount": 0,
+    "zipCodeCount": 8,
+    "totalCounter": 8
+  },
+  {
+    "name": "Leitchfield",
+    "idCount": 0,
+    "nameCount": 0,
+    "zipCodeCount": 0,
+    "totalCounter": 4
+  }
+]

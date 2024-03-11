@@ -1,0 +1,3827 @@
+{
+	"info": {
+		"_postman_id": "300a4f35-8fa8-44ca-bcf8-fcc768da23ba",
+		"name": "weather-service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28318667"
+	},
+	"item": [
+		{
+			"name": "SearchByCity",
+			"item": [
+				{
+					"name": "SearchByCityID",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_city_id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City ID must be a digits.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('City ID must be a digits.');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityIdQueryParam}}={{invalidCityId}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityIdQueryParam}}",
+															"value": "{{invalidCityId}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_city_id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City ID is required.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('City ID is required');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityIdQueryParam}}=",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityIdQueryParam}}",
+															"value": ""
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_city_id_and_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Either City ID or City name is required.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('Either City ID or City name is required');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "",
+															"value": null
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UNKNOWN_city_id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 404\", function () {",
+															"  pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City NOT Found.\", () => {",
+															"    pm.expect(responseJson.message).to.contains('400 Bad Request');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityIdQueryParam}}={{unknownCityId}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityIdQueryParam}}",
+															"value": "{{unknownCityId}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_city_id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(5946768);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Edmonton');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-113.4687);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(53.5501);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityIdQueryParam}}={{validCityId}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityIdQueryParam}}",
+															"value": "{{validCityId}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "POST as GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_city_id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: City ID must contain only digits.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[City ID must contain only digits]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityIdQueryParam}}\":\"{{invalidCityId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_city_id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has message: City ID is required.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[City ID must contain only digits]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityIdQueryParam}}\":\"\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_city_id_and_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has message: City ID or City name is required.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[City ID or City name is required]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UNKNOWN_city_id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 404\", function () {",
+															"  pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"The response has message: Invalid City ID.\", () => {",
+															"    pm.expect(responseJson.message).to.contains('Invalid ID');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityIdQueryParam}}\":\"{{unknownCityId}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_city_id",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(5946768);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Edmonton');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-113.4687);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(53.5501);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityIdQueryParam}}\": {{validCityId}}\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "SearchByCityName",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City name must contain only letters and spaces.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('City name must contain only letters and spaces');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{invalidCityName}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{invalidCityName}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City name is required.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('City name is required');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}=",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": ""
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UNKNOWN_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 404\", function () {",
+															"  pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City NOT Found.\", () => {",
+															"    pm.expect(responseJson.message).to.contains('city not found');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{unknownCityName}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{unknownCityName}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(5946768);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Edmonton');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-113.4687);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(53.5501);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{validCityName}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "POST as GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: City name must contain only letters and spaces.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[City name must contain only letters and spaces]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\":\"{{invalidCityName}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has message: City name must contain only letters and spaces.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[City name must contain only letters and spaces]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\":\"\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UNKNOWN_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has message: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[City name must contain only letters and spaces]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\":\"{{unknownCityName}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_city_name",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(5946768);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Edmonton');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-113.4687);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(53.5501);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\": \"{{validCityName}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "SearchByCityAndCountry",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_combination_city_country_code_long",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('Country code must be a two-letter code');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}&{{countryCodeQueryParam}}={{invalidCountryCodeLong}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{validCityName}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{invalidCountryCodeLong}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UNKNOWN_combination_city_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 404\", function () {",
+															"  pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City NOT Found.\", () => {",
+															"    pm.expect(responseJson.message).to.contains('city not found');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}&{{countryCodeQueryParam}}={{unknownCountryCode}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{validCityName}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{unknownCountryCode}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "INVALID_combination_city_country_code_short",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('Country code must be a two-letter code');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}&{{countryCodeQueryParam}}={{invalidCountryCodeShort}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{validCityName}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{invalidCountryCodeShort}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code is required.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('Country code is required');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}&{{countryCodeQueryParam}}=",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{validCityName}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": ""
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_city_name_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(5946768);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Edmonton');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-113.4687);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(53.5501);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}&{{countryCodeQueryParam}}={{validCountryCode}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{validCityName}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{validCountryCode}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "POST as GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_combination_city_country_code_long",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[Country code must be a two-letter code]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\": \"{{validCityName}}\",\n    \"{{countryCodeQueryParam}}\": \"{{invalidCountryCodeLong}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UNKNOWN_combination_city_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 404\", function () {",
+															"  pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City NOT Found.\", () => {",
+															"    pm.expect(responseJson.message).to.contains('city not found');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\":\"{{validCityName}}\",\n    \"{{countryCodeQueryParam}}\":\"{{unknownCountryCode}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "INVALID_combination_city_country_code_short",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[Country code must be a two-letter code]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\":\"{{validCityName}}\",\n    \"{{countryCodeQueryParam}}\":\"{{invalidCountryCodeShort}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[Country code must be a two-letter code]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\":\"{{validCityName}}\",\n    \"{{countryCodeQueryParam}}\": \"\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_city_name_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(5946768);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Edmonton');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-113.4687);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(53.5501);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\":\"{{validCityName}}\",\n    \"{{countryCodeQueryParam}}\":\"{{validCountryCode}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "SearchByCityAndStateAndCountry",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_combination_city_country_code_state_code_long",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: State code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('State code must be a two-letter code');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}&{{countryCodeQueryParam}}={{validCountryCode}}&{{stateCodeQueryParam}}={{invalidStateCodeLong}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{validCityName}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{validCountryCode}}"
+														},
+														{
+															"key": "{{stateCodeQueryParam}}",
+															"value": "{{invalidStateCodeLong}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "INVALID_combination_city_country_code_state_code_short",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: State code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('State code must be a two-letter code');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}&{{countryCodeQueryParam}}={{validCountryCode}}&{{stateCodeQueryParam}}={{invalidStateCodeShort}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{validCityName}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{validCountryCode}}"
+														},
+														{
+															"key": "{{stateCodeQueryParam}}",
+															"value": "{{invalidStateCodeShort}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_city_name_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(5946768);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Edmonton');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-113.4687);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(53.5501);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}&{{countryCodeQueryParam}}={{validCountryCode}}&{{stateCodeQueryParam}}={{validStateCode}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{cityNameQueryParam}}",
+															"value": "{{validCityName}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{validCountryCode}}"
+														},
+														{
+															"key": "{{stateCodeQueryParam}}",
+															"value": "{{validStateCode}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "POST as GET Copy",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_combination_city_country_code_state_code_long",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has error message: State code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[State code must be a two-letter code]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\": \"{{validCityName}}\",\n    \"{{countryCodeQueryParam}}\": \"{{validCountryCode}}\",\n    \"{{stateCodeQueryParam}}\": \"{{invalidStateCodeLong}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "INVALID_combination_city_country_code_state_code_short",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has error message: State code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[State code must be a two-letter code]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\": \"{{validCityName}}\",\n    \"{{countryCodeQueryParam}}\": \"{{validCountryCode}}\",\n    \"{{stateCodeQueryParam}}\": \"{{invalidStateCodeShort}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_city_name_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(5946768);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Edmonton');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-113.4687);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(53.5501);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{cityNameQueryParam}}\":\"{{validCityName}}\",\n    \"{{countryCodeQueryParam}}\":\"{{validCountryCode}}\",\n    \"{{stateCodeQueryParam}}\":\"{{validStateCode}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{cityEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{cityEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SearchByZip",
+			"item": [
+				{
+					"name": "SearchByZipCode",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_zip_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 404\", function () {",
+															"  pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City NOT Found.\", () => {",
+															"    pm.expect(responseJson.message).to.contains('city not found');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}?{{zipCodeQueryParam}}={{invalidZipCode}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{zipCodeQueryParam}}",
+															"value": "{{invalidZipCode}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_zip_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Zip code is required.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('Zip code is required');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}?{{zipCodeQueryParam}}=",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{zipCodeQueryParam}}",
+															"value": ""
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_zip_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(0);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Hudson');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-86.3012);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(37.6506);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}?{{zipCodeQueryParam}}={{validZipCode}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{zipCodeQueryParam}}",
+															"value": "{{validZipCode}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "POST as GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_zip_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 404\", function () {",
+															"  pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City NOT Found.\", () => {",
+															"    pm.expect(responseJson.message).to.contains('city not found');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{zipCodeQueryParam}}\": \"{{invalidZipCode}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_zip_code Copy",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{zipCodeQueryParam}}\" :\"\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_zip_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(0);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Hudson');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-86.3012);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(37.6506);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{zipCodeQueryParam}}\": \"{{validZipCode}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "SearchByZipCodeAndCountry",
+					"item": [
+						{
+							"name": "GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_combination_zip_country_code_long",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('Country code must be a two-letter code');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}?{{zipCodeQueryParam}}={{validZipCode}}&{{countryCodeQueryParam}}={{invalidCountryCodeLong}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{zipCodeQueryParam}}",
+															"value": "{{validZipCode}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{invalidCountryCodeLong}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UNKNOWN_combination_zip_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 404\", function () {",
+															"  pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City NOT Found.\", () => {",
+															"    pm.expect(responseJson.message).to.contains('city not found');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}?{{zipCodeQueryParam}}={{validZipCode}}&{{countryCodeQueryParam}}={{unknownCountryCode}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{zipCodeQueryParam}}",
+															"value": "{{validZipCode}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{unknownCountryCode}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "INVALID_combination_zip_country_code_short",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('Country code must be a two-letter code');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}?{{zipCodeQueryParam}}={{validZipCode}}&{{countryCodeQueryParam}}={{invalidCountryCodeShort}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{zipCodeQueryParam}}",
+															"value": "{{validZipCode}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{invalidCountryCodeShort}}"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code is required.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('Country code is required');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}?{{zipCodeQueryParam}}={{validZipCode}}&{{countryCodeQueryParam}}=",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{zipCodeQueryParam}}",
+															"value": "{{validZipCode}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": ""
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_zip_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(0);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Hudson');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-86.3012);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(37.6506);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}?{{zipCodeQueryParam}}={{validZipCode}}&{{countryCodeQueryParam}}={{validCountryCode-US}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													],
+													"query": [
+														{
+															"key": "{{zipCodeQueryParam}}",
+															"value": "{{validZipCode}}"
+														},
+														{
+															"key": "{{countryCodeQueryParam}}",
+															"value": "{{validCountryCode-US}}"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "POST as GET",
+							"item": [
+								{
+									"name": "Negative Scenario",
+									"item": [
+										{
+											"name": "INVALID_combination_zip_country_code_long",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[Country code must be a two-letter code]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{zipCodeQueryParam}}\": \"{{validZipCode}}\",\n    \"{{countryCodeQueryParam}}\": \"{{invalidCountryCodeLong}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "UNKNOWN_combination_zip_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 404\", function () {",
+															"  pm.response.to.have.status(404);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: City NOT Found.\", () => {",
+															"    pm.expect(responseJson.message).to.contains('city not found');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{zipCodeQueryParam}}\": \"{{validZipCode}}\",\n    \"{{countryCodeQueryParam}}\": \"{{unknownCountryCode}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "INVALID_combination_zip_country_code_short",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+															"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[Country code must be a two-letter code]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{zipCodeQueryParam}}\":\"{{validZipCode}}\",\n    \"{{countryCodeQueryParam}}\":\"{{invalidCountryCodeShort}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EMPTY_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 400\", function () {",
+															"  pm.response.to.have.status(400);",
+															"});",
+															"",
+															"pm.test(\"The response has error message: Country code must be a two-letter code.\", () => {",
+															"    pm.expect(responseJson.message).to.eql('[Country code must be a two-letter code]');",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{zipCodeQueryParam}}\":\"{{validZipCode}}\",\n    \"{{countryCodeQueryParam}}\": \"\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Positive Scenario",
+									"item": [
+										{
+											"name": "VALID_zip_country_code",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"var responseJson=pm.response.json();",
+															"pm.test(\"Status code is 200\", function () {",
+															"  pm.response.to.have.status(200);",
+															"});",
+															"pm.test(\"The response has id.\", () => {",
+															"    pm.expect(responseJson.currentWeather.id).to.eql(0);",
+															"});",
+															"pm.test(\"The response has name.\", () => {",
+															"    pm.expect(responseJson.currentWeather.name).to.eql('Hudson');",
+															"});",
+															"pm.test(\"The response has longitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-86.3012);",
+															"});",
+															"pm.test(\"The response has latitute.\", () => {",
+															"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(37.6506);",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												},
+												{
+													"listen": "prerequest",
+													"script": {
+														"exec": [
+															""
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"{{zipCodeQueryParam}}\":\"{{validZipCode}}\",\n    \"{{countryCodeQueryParam}}\":\"{{validCountryCode-US}}\"\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{zipEndpoint}}",
+													"host": [
+														"{{hostUrl}}"
+													],
+													"path": [
+														"{{currentWeatherEndpoint}}",
+														"{{zipEndpoint}}"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "SearchByCoordinates",
+			"item": [
+				{
+					"name": "GET",
+					"item": [
+						{
+							"name": "Negative Scenario",
+							"item": [
+								{
+									"name": "INVALID_latitute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 400\", function () {",
+													"  pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"The response has error message: Latitude must be a number between -90 and 90.\", () => {",
+													"    pm.expect(responseJson.message).to.eql('Latitude must be a number between -90 and 90');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}?{{latitudeQueryParam}}={{invalidLatitude}}&{{longitudeQueryParam}}={{validLongitude}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											],
+											"query": [
+												{
+													"key": "{{latitudeQueryParam}}",
+													"value": "{{invalidLatitude}}"
+												},
+												{
+													"key": "{{longitudeQueryParam}}",
+													"value": "{{validLongitude}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EMPTY_longitute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 400\", function () {",
+													"  pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"The response has error detail: Required parameter 'longitude' is not present.\", () => {",
+													"    pm.expect(responseJson.detail).to.eql('Required parameter \\'longitude\\' is not present.');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}?{{latitudeQueryParam}}={{invalidLatitude}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											],
+											"query": [
+												{
+													"key": "{{latitudeQueryParam}}",
+													"value": "{{invalidLatitude}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EMPTY_latitute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 400\", function () {",
+													"  pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"The response has error detail: Required parameter 'latitude' is not present.\", () => {",
+													"    pm.expect(responseJson.detail).to.eql('Required parameter \\'latitude\\' is not present.');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}?{{longitudeQueryParam}}={{invalidLongitude}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											],
+											"query": [
+												{
+													"key": "{{longitudeQueryParam}}",
+													"value": "{{invalidLongitude}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "INVALID_longitute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 400\", function () {",
+													"  pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"The response has error message: Longitude must be a number between -180 and 180.\", () => {",
+													"    pm.expect(responseJson.message).to.eql('Longitude must be a number between -180 and 180');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}?{{latitudeQueryParam}}={{validLatitude}}&{{longitudeQueryParam}}={{invalidLongitude}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											],
+											"query": [
+												{
+													"key": "{{latitudeQueryParam}}",
+													"value": "{{validLatitude}}"
+												},
+												{
+													"key": "{{longitudeQueryParam}}",
+													"value": "{{invalidLongitude}}"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Positive Scenario",
+							"item": [
+								{
+									"name": "VALID_latitute_longitute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"The response has id.\", () => {",
+													"    pm.expect(responseJson.currentWeather.id).to.eql(4297882);",
+													"});",
+													"pm.test(\"The response has name.\", () => {",
+													"    pm.expect(responseJson.currentWeather.name).to.eql('Leitchfield');",
+													"});",
+													"pm.test(\"The response has longitute.\", () => {",
+													"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-86.3012);",
+													"});",
+													"pm.test(\"The response has latitute.\", () => {",
+													"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(37.6506);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}?{{latitudeQueryParam}}={{validLatitude}}&{{longitudeQueryParam}}={{validLongitude}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											],
+											"query": [
+												{
+													"key": "{{latitudeQueryParam}}",
+													"value": "{{validLatitude}}"
+												},
+												{
+													"key": "{{longitudeQueryParam}}",
+													"value": "{{validLongitude}}"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "POST as GET",
+					"item": [
+						{
+							"name": "Negative Scenario",
+							"item": [
+								{
+									"name": "INVALID_latitute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 400\", function () {",
+													"  pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+													"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+													"});",
+													"",
+													"pm.test(\"The response has error message: Latitude must be a number between -90 and 90.\", () => {",
+													"    pm.expect(responseJson.message).to.eql('[Latitude must be between -90 and 90]');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"{{latitudeQueryParam}}\":\"{{invalidLatitude}}\",\n    \"{{longitudeQueryParam}}\":\"{{validLongitude}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EMPTY_longitute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 400\", function () {",
+													"  pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+													"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+													"});",
+													"",
+													"pm.test(\"The response has error detail: Longitude cannot be null.\", () => {",
+													"    pm.expect(responseJson.message).to.eql('[Longitude cannot be null]');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"{{latitudeQueryParam}}\":\"{{validLatitude}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "EMPTY_latitute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 400\", function () {",
+													"  pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"The response has error detail: Latitude cannot be null.\", () => {",
+													"    pm.expect(responseJson.message).to.eql('[Latitude cannot be null]');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"{{longitudeQueryParam}}\":\"{{validLongitude}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "INVALID_longitute",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 400\", function () {",
+													"  pm.response.to.have.status(400);",
+													"});",
+													"",
+													"pm.test(\"The response has httpStatus: BAD_REQUEST.\", () => {",
+													"    pm.expect(responseJson.httpStatus).to.eql('BAD_REQUEST');",
+													"});",
+													"",
+													"pm.test(\"The response has error message: Longitude must be a number between -180 and 180.\", () => {",
+													"    pm.expect(responseJson.message).to.eql('[Longitude must be between -180 and 180]');",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"{{latitudeQueryParam}}\":\"{{validLatitude}}\",\n    \"{{longitudeQueryParam}}\":\"{{invalidLongitude}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Positive Scenario",
+							"item": [
+								{
+									"name": "VALID_latitute_longitute Copy",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"var responseJson=pm.response.json();",
+													"pm.test(\"Status code is 200\", function () {",
+													"  pm.response.to.have.status(200);",
+													"});",
+													"pm.test(\"The response has id.\", () => {",
+													"    pm.expect(responseJson.currentWeather.id).to.eql(4297882);",
+													"});",
+													"pm.test(\"The response has name.\", () => {",
+													"    pm.expect(responseJson.currentWeather.name).to.eql('Leitchfield');",
+													"});",
+													"pm.test(\"The response has longitute.\", () => {",
+													"    pm.expect(responseJson.currentWeather.coord.lon).to.eql(-86.3012);",
+													"});",
+													"pm.test(\"The response has latitute.\", () => {",
+													"    pm.expect(responseJson.currentWeather.coord.lat).to.eql(37.6506);",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"{{latitudeQueryParam}}\":\"{{validLatitude}}\",\n    \"{{longitudeQueryParam}}\":\"{{validLongitude}}\"\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{hostUrl}}/{{currentWeatherEndpoint}}/{{coordinateEndpoint}}",
+											"host": [
+												"{{hostUrl}}"
+											],
+											"path": [
+												"{{currentWeatherEndpoint}}",
+												"{{coordinateEndpoint}}"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "City Search Tracker",
+			"item": [
+				{
+					"name": "Negative Scenario",
+					"item": [
+						{
+							"name": "INVALID_city_search_tracker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson=pm.response.json();",
+											"pm.test(\"Status code is 400\", function () {",
+											"  pm.response.to.have.status(400);",
+											"});",
+											"",
+											"pm.test(\"The response has error message: City name must contain only letters and spaces\", () => {",
+											"    pm.expect(responseJson[0].message).to.eql('City name must contain only letters and spaces');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{hostUrl}}/{{searchTrackerEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{invalidCityName}}",
+									"host": [
+										"{{hostUrl}}"
+									],
+									"path": [
+										"{{searchTrackerEndpoint}}",
+										"{{cityEndpoint}}"
+									],
+									"query": [
+										{
+											"key": "{{cityNameQueryParam}}",
+											"value": "{{invalidCityName}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UNKNOWN_city_search_tracker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson=pm.response.json();",
+											"pm.test(\"Status code is 404\", function () {",
+											"  pm.response.to.have.status(404);",
+											"});",
+											"",
+											"pm.test(\"The response has error message: City Not Found\", () => {",
+											"    pm.expect(responseJson[0].message).to.eql('City Not Found');",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{hostUrl}}/{{searchTrackerEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{unknownCityName}}",
+									"host": [
+										"{{hostUrl}}"
+									],
+									"path": [
+										"{{searchTrackerEndpoint}}",
+										"{{cityEndpoint}}"
+									],
+									"query": [
+										{
+											"key": "{{cityNameQueryParam}}",
+											"value": "{{unknownCityName}}"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Positive Scenario",
+					"item": [
+						{
+							"name": "VALID_by_city_name",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson=pm.response.json();",
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"The response has name\", () => {",
+											"    pm.expect(responseJson[0].name).to.eql('edmonton');",
+											"});",
+											"",
+											"pm.test(\"The response has idCount\", () => {",
+											"    pm.expect(responseJson[0].idCount).to.gt(0);",
+											"});",
+											"pm.test(\"The response has nameCount\", () => {",
+											"    pm.expect(responseJson[0].nameCount).to.gt(0);",
+											"});",
+											"pm.test(\"The response has zipCodeCount\", () => {",
+											"    pm.expect(responseJson[0].zipCodeCount).to.gte(0);",
+											"});",
+											"pm.test(\"The response has totalCounter\", () => {",
+											"    pm.expect(responseJson[0].totalCounter).to.gt(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{hostUrl}}/{{searchTrackerEndpoint}}/{{cityEndpoint}}?{{cityNameQueryParam}}={{validCityName}}",
+									"host": [
+										"{{hostUrl}}"
+									],
+									"path": [
+										"{{searchTrackerEndpoint}}",
+										"{{cityEndpoint}}"
+									],
+									"query": [
+										{
+											"key": "{{cityNameQueryParam}}",
+											"value": "{{validCityName}}"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "VALID_get_all_city_tracker",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson=pm.response.json();",
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"The response has idCount\", () => {",
+											"    pm.expect(responseJson[0].idCount).to.gte(0);",
+											"});",
+											"pm.test(\"The response has nameCount\", () => {",
+											"    pm.expect(responseJson[0].nameCount).to.gte(0);",
+											"});",
+											"pm.test(\"The response has zipCodeCount\", () => {",
+											"    pm.expect(responseJson[0].zipCodeCount).to.gte(0);",
+											"});",
+											"pm.test(\"The response has totalCounter\", () => {",
+											"    pm.expect(responseJson[0].totalCounter).to.gt(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{hostUrl}}/{{searchTrackerEndpoint}}/{{cityEndpoint}}",
+									"host": [
+										"{{hostUrl}}"
+									],
+									"path": [
+										"{{searchTrackerEndpoint}}",
+										"{{cityEndpoint}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "VALID_get_all_paginated",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var responseJson=pm.response.json();",
+											"pm.test(\"Status code is 200\", function () {",
+											"  pm.response.to.have.status(200);",
+											"});",
+											"",
+											"pm.test(\"The response has idCount\", () => {",
+											"    pm.expect(responseJson[0].idCount).to.gte(0);",
+											"});",
+											"pm.test(\"The response has nameCount\", () => {",
+											"    pm.expect(responseJson[0].nameCount).to.gte(0);",
+											"});",
+											"pm.test(\"The response has zipCodeCount\", () => {",
+											"    pm.expect(responseJson[0].zipCodeCount).to.gte(0);",
+											"});",
+											"pm.test(\"The response has totalCounter\", () => {",
+											"    pm.expect(responseJson[0].totalCounter).to.gt(0);",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{hostUrl}}/{{searchTrackerEndpoint}}/{{cityEndpoint}}?page=0&pageSize=1",
+									"host": [
+										"{{hostUrl}}"
+									],
+									"path": [
+										"{{searchTrackerEndpoint}}",
+										"{{cityEndpoint}}"
+									],
+									"query": [
+										{
+											"key": "page",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	]
+}
