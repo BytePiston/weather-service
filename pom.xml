@@ -28,15 +28,13 @@
         <sonar.maven.plugin.version>3.10.0.2594</sonar.maven.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
         <sonar.exclusions>
-            **/com/verdant/weather/service/config/*.java,
-            **/com/verdant/weather/service/event/*.java,
+            **/com/verdant/weather/service/entity/*.java,
             **/com/verdant/weather/service/config/*.java,
             **/com/verdant/weather/service/exception/*.java,
             **/com/verdant/weather/service/model/*.java
         </sonar.exclusions>
         <sonar.coverage.exclusions>
             **/com/verdant/weather/service/entity/*.java,
-            **/com/verdant/weather/service/event/*.java,
             **/com/verdant/weather/service/config/*.java,
             **/com/verdant/weather/service/exception/*.java,
             **/com/verdant/weather/service/model/*.java
