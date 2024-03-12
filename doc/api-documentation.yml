@@ -725,7 +725,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "pattern": "^\d+$",
+            "pattern": "^\\d+$",
             "type": "string"
           },
           "name": {
