@@ -29,4 +29,4 @@ jobs:
       - name: Run Postman Collection using Newman
         working-directory: ./app
         run: |
-          docker run -t ./app/postman/newman:ubuntu run postman/weather-service.postman_collection.json -e ./app/postman/weather-service-env.postman_environment.json
+          docker run -t postman/newman:ubuntu run postman/weather-service.postman_collection.json -e ./app/postman/weather-service-env.postman_environment.json
