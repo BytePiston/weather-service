@@ -26,7 +26,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v1
+        uses: github/codeql-action/init@v2
         with:
           languages: "java"
 
@@ -34,15 +34,7 @@ jobs:
         run: mvn clean install
 
       - name: Perform CodeQL Security Analysis
-        uses: github/codeql-action/analyze@v1
-
-#      - name: Run Postman Collection using Newman
-#        run: |
-#          docker compose up --build -d
-#          mkdir -p postman
-#          curl -O postman/weather-service.postman_collection.json https://raw.githubusercontent.com/BytePiston/weather-service/master/postman_collection/weather-service.postman_collection.json
-#          curl -O postman/weather-service-env.postman_environment.json https://raw.githubusercontent.com/BytePiston/weather-service/master/postman_collection/weather-service-env.postman_environment.json
-#          docker run -t postman/newman:ubuntu run postman/weather-service.postman_collection.json -e postman/weather-service-env.postman_environment.json
+        uses: github/codeql-action/analyze@v2
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
