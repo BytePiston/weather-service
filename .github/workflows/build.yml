@@ -75,3 +75,7 @@ jobs:
         run: |
           echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
           echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
+
+      - name: Run Postman Collection using Newman
+        run: |
+          docker run -p 8080:8080 -t postman/newman:ubuntu run https://github.com/BytePiston/weather-service/blob/master/postman_collection/weather-service.postman_collection.json -e https://github.com/BytePiston/weather-service/blob/master/postman_collection/weather-service-env.postman_environment.json
