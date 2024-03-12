@@ -1,4 +1,4 @@
-name: CI Build
+name: Project Build
 
 on:
   push:
@@ -22,8 +22,19 @@ jobs:
           java-version: 17
           distribution: 'zulu' # Alternative distribution options are available.
 
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: "java"
+
       - name: Maven Clean Install
         run: mvn clean install
+
+      - name: Perform CodeQL Security Analysis
+        uses: github/codeql-action/analyze@v3
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
@@ -39,13 +50,13 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Build and analyze
+      - name: Build and Analyze with SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=BytePiston_weather-service
 
-          # generates coverage-report.md and publishes as checkrun
+        # generates coverage-report.md and publishes as checkrun
       - name: JaCoCo Code Coverage Report
         id: jacoco_reporter
         uses: PavanMudigonda/jacoco-reporter@v5.0
@@ -75,3 +86,12 @@ jobs:
         run: |
           echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
           echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
+
+#      - name: Set up Docker and Start the Application
+#        run: |
+#          docker compose up --build -d
+
+#      - name: Run Postman Collection using Newman
+#        working-directory: postman_collection
+#        run: |
+#          docker run -t postman/newman:ubuntu run weather-service.postman_collection.json -e weather-service-env.postman_environment.json
