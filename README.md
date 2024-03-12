@@ -56,13 +56,32 @@ Before you begin, ensure you have the following prerequisites installed:
 
 ## API Documentation
 
-The Weather Service application uses Swagger for API documentation. Before making any requests, please visit the Swagger UI to view the API contracts. The Swagger UI provides a user-friendly interface to explore and test the API endpoints.
 
-You can access the Swagger UI at the following URL when running the application locally:
+The Weather Service application uses both Swagger and Bump for Open API documentation. Before making any requests, please visit the Swagger UI or Bump UI to view the API contracts. Both interfaces provide a user-friendly way to explore the API endpoints.
+
+**The Open API documentation is hosted on Bump.sh and can be accessed at the following URL:**
+
+```bash
+    https://bump.sh/bytepiston/hub/weather-service/doc/weather-service-api
+  ```
+
+**You can access the Swagger UI at the following URL when running the application locally:**
 
 ```bash
     http://localhost:8080/swagger-ui.html
   ```
+#### Auto-Generating Open API Documentation with GitHub Actions
+
+The workflow defined in the `.github/workflows/bump.yml` file is responsible for auto-generating the API documentation and updating it on Bump.sh when changes are merged to the master branch. Here's how it works:  
+
+- The workflow is triggered on a `push` event to the `master` branch.
+
+- The `deploy-doc` job is executed when the event is a `push`. This job is responsible for deploying the API documentation on `Bump.sh`.
+
+- If there are any changes in the `api-documentation.yml` file, the updated API documentation will be deployed on Bump.sh.
+
+- This workflow ensures that the API Contract Documentation is always up-to-date with the latest contracts in the master branch.
+
 
 ## Current Weather Endpoints
 

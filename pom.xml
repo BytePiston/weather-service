@@ -17,6 +17,10 @@
         <java.version>17</java.version>
         <spring.javaformat.version>0.0.40</spring.javaformat.version>
         <springdoc.openapi.version>2.3.0</springdoc.openapi.version>
+        <springdoc.openapi.maven.plugin.version>1.4</springdoc.openapi.maven.plugin.version>
+        <api.docs.url>http://localhost:8080/v3/api-docs</api.docs.url>
+
+            <!--        SonarQube properties-->
         <sonar.organization>bytepiston</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <jacoco.version>0.8.11</jacoco.version>
@@ -173,6 +177,24 @@
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${sonar.maven.plugin.version}</version>
+            </plugin>
+            <plugin>
+                <groupId>org.springdoc</groupId>
+                <artifactId>springdoc-openapi-maven-plugin</artifactId>
+                <version>${springdoc.openapi.maven.plugin.version}</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <skip>false</skip>
+                    <apiDocsUrl>${api.docs.url}</apiDocsUrl>
+                    <outputFileName>api-documentation.yml</outputFileName>
+                    <outputDir>open-api-doc</outputDir>
+                </configuration>
             </plugin>
         </plugins>
     </build>
