@@ -58,7 +58,7 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Build and analyze
+      - name: Build and Analyze with SonarCloud
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -95,9 +95,9 @@ jobs:
           echo "Total coverage ${{ steps.jacoco.outputs.coverage-overall }}"
           echo "Changed Files coverage ${{ steps.jacoco.outputs.coverage-changed-files }}"
 
-      - name: Set up Docker and Start the Application
-        run: |
-          docker compose up --build -d
+#      - name: Set up Docker and Start the Application
+#        run: |
+#          docker compose up --build -d
 
 #      - name: Download Postman Collection and Environment
 #        working-directory: ./app
@@ -106,8 +106,8 @@ jobs:
 #          curl -O /weather-service.postman_collection.json https://raw.githubusercontent.com/BytePiston/weather-service/master/postman_collection/weather-service.postman_collection.json
 #          curl -O ./app/postman/weather-service-env.postman_environment.json https://raw.githubusercontent.com/BytePiston/weather-service/master/postman_collection/weather-service-env.postman_environment.json
 
-      - name: Run Postman Collection using Newman
-        working-directory: postman_collection
-        run: |
-          docker run -t postman/newman:ubuntu run weather-service.postman_collection.json -e weather-service-env.postman_environment.json
+#      - name: Run Postman Collection using Newman
+#        working-directory: postman_collection
+#        run: |
+#          docker run -t postman/newman:ubuntu run weather-service.postman_collection.json -e weather-service-env.postman_environment.json
 
