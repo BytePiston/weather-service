@@ -27,10 +27,10 @@ jobs:
 
       - name: Run Postman Collection using Newman
         run: |
-#          docker pull neel0108p/weather-station:latest
-#          docker run -p 8080:8080 neel0108p/weather-station:latest
           docker compose up --build
           docker run -t postman/newman:ubuntu run https://github.com/BytePiston/weather-service/blob/master/postman_collection/weather-service.postman_collection.json -e https://github.com/BytePiston/weather-service/blob/master/postman_collection/weather-service-env.postman_environment.json
+#              docker pull neel0108p/weather-station:latest
+      #          docker run -p 8080:8080 neel0108p/weather-station:latest
 
       - name: Cache SonarCloud packages
         uses: actions/cache@v3
