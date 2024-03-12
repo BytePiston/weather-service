@@ -28,9 +28,9 @@ jobs:
       - name: Run Postman Collection using Newman
         run: |
           docker compose up --build -d
-          curl -O ./weather-service.postman_collection.json https://raw.githubusercontent.com/BytePiston/weather-service/master/postman_collection/weather-service.postman_collection.json
-          curl -O ./weather-service-env.postman_environment.json https://raw.githubusercontent.com/BytePiston/weather-service/master/postman_collection/weather-service-env.postman_environment.json
-          docker run -t postman/newman:ubuntu run ./weather-service.postman_collection.json -e ./weather-service-env.postman_environment.json
+#          curl -O ./weather-service.postman_collection.json https://raw.githubusercontent.com/BytePiston/weather-service/master/postman_collection/weather-service.postman_collection.json
+#          curl -O ./weather-service-env.postman_environment.json https://raw.githubusercontent.com/BytePiston/weather-service/master/postman_collection/weather-service-env.postman_environment.json
+          docker run -t postman/newman:ubuntu run /app/postman_collection/weather-service.postman_collection.json -e /app/postman_collection/weather-service-env.postman_environment.json
 #          docker pull neel0108p/weather-station:latest
 #          docker run -p 8080:8080 neel0108p/weather-station:latest
 
