@@ -1,6 +1,11 @@
 name: Postman Runner
 
 on:
+  push:
+    branches:
+      - master
+  pull_request:
+    types: [ opened, synchronize, reopened ]
   workflow_run:
     workflows: ["Project Build"]
     types:
