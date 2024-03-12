@@ -22,8 +22,19 @@ jobs:
           java-version: 17
           distribution: 'zulu' # Alternative distribution options are available.
 
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v1
+        with:
+          languages: "java"
+
       - name: Maven Clean Install
         run: mvn clean install
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v1
 
 #      - name: Run Postman Collection using Newman
 #        run: |
