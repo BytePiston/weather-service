@@ -445,18 +445,31 @@ Here's why this custom cache implementation is beneficial:
 
 The `CachedWeatherMap` class in the `com.verdant.weather.service.config` package contains the implementation details of this custom cache.
 
+
 ## TODO and Future Enhancements
 
-- In CityTrackerController and CityTrackerService, add implementation of more endpoints to support additional analytics and tracking features based on provided abstract methods in CitySearchTrackerRepository.
-- Add more junit for Model, Entity classes to increase overall code coverage
-- Run postman collection with Newman and environment variables as part of the CI/CD pipeline to automate testing
-- Add support for additional weather APIs (e.g., Future Weather, Historical Weather, etc.)
-- Integrate Redis or Memcached for distributed caching to support scalability and high-traffic environments
-- Implement a rate limiter to prevent abuse of the API and ensure fair usage
+### Short Term Goals
+
+- Deploy Docker image to a cloud hosting platform through GitHub Actions workflow.
+- Integrate Fortify and BlackDuck to scan the codebase for security vulnerabilities.
+- In CityTrackerController and CityTrackerService, add implementation of endpoints to support additional analytics and tracking features.
+- Add more junit for Model, Entity classes to increase overall code coverage.
+- Run postman collection with Newman and environment variables as part of the CI/CD pipeline to automate testing.
+- Add support for additional weather APIs (e.g., Future Weather, Historical Weather, etc.).
+- Integrate Redis or Memcached for distributed caching to support scalability and high-traffic environments.
+- Validate all inputs to prevent SQL injection, cross-site scripting (XSS), and other common web attacks.
+- Use a consistent logging format to make it easier to search and analyze the logs.
 - Integrate with a database to store City information such as ID, Name, Zip Code for enhanced validation to avoid unnecessary API calls to OpenWeatherMap in case of invalid city names or IDs
 - Integrate with a database to store historical weather data
-- Implement user authentication and authorization for the API endpoints
+
+### Long Term Goals
+
+- Implement a rate limiter to prevent abuse of the API and ensure fair usage
 - Add support for multiple languages in the API responses
+- Integrate ELK (Elasticsearch, Logstash, Kibana) for log aggregation and analysis.
+- Use Spring Boot Actuator to expose metrics like JVM memory usage, CPU usage, request count, error count, etc.
+- Integrate with a monitoring system like Prometheus and Grafana to collect, store, and visualize these metrics.
+- Implement Spring Security to secure the application endpoints.
 - Implement a notification system for weather alerts and updates
 
 ## Contributing
