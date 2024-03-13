@@ -1,5 +1,7 @@
 package com.verdant.weather.service.config;
 
+import com.verdant.weather.service.cache.CachedWeatherMap;
+import com.verdant.weather.service.cache.CachedWeatherMapInterface;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +30,7 @@ public class WebConfiguration {
 	 **************************************************************************************/
 	@Bean
 	@Scope("singleton")
-	public CachedWeatherMap currentWeatherUrlCache() {
+	public CachedWeatherMapInterface cachedWeatherMap() {
 		return new CachedWeatherMap();
 	}
 

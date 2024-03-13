@@ -1,4 +1,4 @@
-package com.verdant.weather.service.config;
+package com.verdant.weather.service.cache;
 
 import com.verdant.weather.service.model.response_model.WeatherResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -11,7 +11,8 @@ import java.util.concurrent.TimeUnit;
 import static com.verdant.weather.service.util.OpenWeatherMapApiUtils.CACHE_TTL_IN_MINUTES;
 
 @Slf4j
-public class CachedWeatherMap extends ConcurrentHashMap<String, Pair<Long, WeatherResponse>> {
+public class CachedWeatherMap extends ConcurrentHashMap<String, Pair<Long, WeatherResponse>>
+		implements CachedWeatherMapInterface {
 
 	// Calculate the TTL for the weather data and put it in the cache;
 	// The TTL is calculated in milliseconds based on the generated time of the weather

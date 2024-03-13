@@ -1,7 +1,8 @@
 package com.verdant.weather.service.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.verdant.weather.service.config.CachedWeatherMap;
+import com.verdant.weather.service.cache.CachedWeatherMap;
+import com.verdant.weather.service.cache.CachedWeatherMapInterface;
 import com.verdant.weather.service.config.WebConfiguration;
 import com.verdant.weather.service.exception.ResourceNotFoundException;
 import com.verdant.weather.service.model.response_model.WeatherResponse;
@@ -35,6 +36,9 @@ class WeatherServiceImplTest {
 
 	@MockBean
 	private RestTemplate restTemplate;
+
+	@MockBean
+	private CachedWeatherMapInterface cachedWeatherMap;
 
 	private ObjectMapper objectMapper = new ObjectMapper();
 
