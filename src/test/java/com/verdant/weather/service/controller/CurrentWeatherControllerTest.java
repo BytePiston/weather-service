@@ -91,7 +91,7 @@ class CurrentWeatherControllerTest {
 
 	@Test
     @DisplayName("Negative Scenario: Get current weather by zip code")
-    public void getCurrentWeatherByZipCodeNegativeScenario() throws Exception {
+    void getCurrentWeatherByZipCodeNegativeScenario() throws Exception {
         when(weatherService.getCurrentWeatherByZipCode("22134")).thenReturn(Optional.empty());
         mockMvc.perform(get("/api/v1/current/weather/zip?zipCode=" + "22134"))
                 .andExpect(status().is4xxClientError());
