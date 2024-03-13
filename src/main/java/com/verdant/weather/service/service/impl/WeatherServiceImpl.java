@@ -2,7 +2,7 @@ package com.verdant.weather.service.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.verdant.weather.service.config.CachedWeatherMap;
+import com.verdant.weather.service.cache.CachedWeatherMapInterface;
 import com.verdant.weather.service.config.WebConfiguration;
 import com.verdant.weather.service.event.CityTrackerEvent;
 import com.verdant.weather.service.exception.ResourceNotFoundException;
@@ -27,7 +27,7 @@ public class WeatherServiceImpl implements WeatherService {
 
 	private final WebConfiguration webConfig;
 
-	private final CachedWeatherMap currentWeatherUrlCache;
+	private final CachedWeatherMapInterface currentWeatherUrlCache;
 
 	private final RestTemplate restTemplate;
 
@@ -35,7 +35,7 @@ public class WeatherServiceImpl implements WeatherService {
 	private final ApplicationEventPublisher eventPublisher;
 
 	@Autowired
-	public WeatherServiceImpl(WebConfiguration webConfig, CachedWeatherMap currentWeatherUrlCache,
+	public WeatherServiceImpl(WebConfiguration webConfig, CachedWeatherMapInterface currentWeatherUrlCache,
 			RestTemplate restTemplate, ApplicationEventPublisher eventPublisher) {
 		this.webConfig = webConfig;
 		this.currentWeatherUrlCache = currentWeatherUrlCache;

@@ -1,15 +1,13 @@
 package com.verdant.weather.service.config;
 
-import com.verdant.weather.service.model.response_model.WeatherResponse;
+import com.verdant.weather.service.cache.CachedWeatherMap;
+import com.verdant.weather.service.cache.CachedWeatherMapInterface;
 import lombok.Getter;
-import org.apache.commons.lang3.tuple.Pair;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.Map;
 
 @Getter
 @Configuration
@@ -32,7 +30,7 @@ public class WebConfiguration {
 	 **************************************************************************************/
 	@Bean
 	@Scope("singleton")
-	public Map<String, Pair<Long, WeatherResponse>> cachedWeatherMap() {
+	public CachedWeatherMapInterface cachedWeatherMap() {
 		return new CachedWeatherMap();
 	}
 
