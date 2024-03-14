@@ -2,6 +2,14 @@
 
 Java application built with Spring Boot and Maven. It allows users to retrieve current weather conditions by city name, zip code, or coordinates using the OpenWeatherMap API.
 
+## Hosting Details:
+> The application is hosted online using DigitalOcean and can be accessed via the following URL: http://bytemetwice.ninja
+> 
+> **Note**: It's important to note that the Secure Sockets Layer (SSL) is currently not implemented, hence, the application should be accessed using the HTTP protocol.
+> 
+> The application is deployed on a DigitalOcean droplet utilizing Docker technology for containerization. The Docker image, sourced from Docker Hub, facilitates a streamlined deployment process using `docker-compose.yml` file.
+
+
 ## Table of Contents
 
 - [Introduction](#introduction)
@@ -17,13 +25,6 @@ Java application built with Spring Boot and Maven. It allows users to retrieve c
 - [Contributing](#contributing)
 - [License](#license)
 
-
-## Hosting Details:
-> The application is hosted online using DigitalOcean and can be accessed via the following URL: http://bytemetwice.ninja
-> 
-> **Note**: It's important to note that the Secure Sockets Layer (SSL) is currently not implemented, hence, the application should be accessed using the HTTP protocol.
-> 
-> The application is deployed on a DigitalOcean droplet utilizing Docker technology for containerization. The Docker image, sourced from Docker Hub, facilitates a streamlined deployment process using `docker-compose.yml` file.
 
 
 ## Introduction
