@@ -17,6 +17,7 @@ Java application built with Spring Boot and Maven. It allows users to retrieve c
 - [Contributing](#contributing)
 - [License](#license)
 
+
 ## Hosting Details:
 > The application is hosted online using DigitalOcean and can be accessed via the following URL: http://bytemetwice.ninja
 > 
