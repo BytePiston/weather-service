@@ -12,6 +12,8 @@ services:
       MYSQL_DATABASE: weather-service
     ports:
       - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
     networks:
       - weather-service-network
     healthcheck:
@@ -21,7 +23,7 @@ services:
       retries: 10
 
   weather-service:
-    image: neel0108p/weather-service
+    image: neel0108p/weather-station
     build:
       context: .
       dockerfile: Dockerfile
@@ -45,3 +47,6 @@ services:
 networks:
   weather-service-network:
     driver: bridge
+
+volumes:
+  mysql-data:
