@@ -29,7 +29,7 @@
         <sonar.jacoco.xmlReportPaths>${project.basedir}/../target/site/jacoco/jacoco.xml</sonar.jacoco.xmlReportPaths>
         <sonar.language>java</sonar.language>
         <sonar.jacoco.plugin>1.3.0.1538</sonar.jacoco.plugin>
-        <sonar.maven.plugin.version>3.10.0.2594</sonar.maven.plugin.version>
+        <sonar.maven.plugin.version>3.11.0.3922</sonar.maven.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
         <sonar.exclusions>
             **/com/verdant/weather/service/entity/*.java,
