@@ -14,6 +14,13 @@ spring:
     hibernate:
       ddl-auto: create-drop
 
+# Management endpoints can be accessed via /actuator/feature endpoint
+management:
+  endpoints:
+    web:
+      exposure:
+        include: feature
+
 # JUnit test cases are dependent on this key; Hence, keeping it as a dummy key
 # Runtime key is provided by docker-compose.yml
 openweathermap:

@@ -17,6 +17,15 @@ Java application built with Spring Boot and Maven. It allows users to retrieve c
 - [Contributing](#contributing)
 - [License](#license)
 
+
+## Hosting Details:
+> The application is hosted online using DigitalOcean and can be accessed via the following URL: http://bytemetwice.ninja
+> 
+> **Note**: It's important to note that the Secure Sockets Layer (SSL) is currently not implemented, hence, the application should be accessed using the HTTP protocol.
+> 
+> The application is deployed on a DigitalOcean droplet utilizing Docker technology for containerization. The Docker image, sourced from Docker Hub, facilitates a streamlined deployment process using `docker-compose.yml` file.
+
+
 ## Introduction
 
 Java application built with the Spring Boot framework and managed with Maven. It leverages the OpenWeatherMap API and the Search Tracker API to provide users with current weather conditions and search tracking capabilities. Users can retrieve weather information by specifying a city id, name (state code and country code are optional parameter which can added with name parameter), zip code (country code is optional parameter which can added with zip code parameter), or geographical coordinates.
