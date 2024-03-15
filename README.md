@@ -5,6 +5,8 @@ Java application built with Spring Boot and Maven. It allows users to retrieve c
 ## Hosting Details:
 > The application is hosted online using DigitalOcean and can be accessed via the following URL: http://bytemetwice.ninja 
 >
+> **Please Note:** You can test APIs by utilizing the "try it out" feature in **Swagger UI** by following above application URL
+>
 > API Documentation URL: https://bump.sh/bytepiston/hub/weather-service/doc/weather-service-api
 > 
 > **Note**: It's important to note that the Secure Sockets Layer (SSL) is currently not implemented, hence, the application should be accessed using the HTTP protocol.
