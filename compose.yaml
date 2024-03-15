@@ -23,7 +23,7 @@ services:
       retries: 10
 
   weather-service:
-    image: neel0108p/weather-station
+#    image: neel0108p/weather-station:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -40,7 +40,7 @@ services:
       - SPRING_DATASOURCE_PASSWORD=test
       - openweathermap.api.key=cf002751564a4c78f5f7ed479f1b9ba3
     ports:
-      - "8080:8080"
+      - "80:8080"
     networks:
       - weather-service-network
 
