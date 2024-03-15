@@ -12,7 +12,7 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
 
 # Management endpoints can be accessed via /actuator/feature endpoint
 management:
@@ -31,3 +31,6 @@ springdoc:
   api-docs:
     path: /v3/api-docs
   show-actuator: true
+  swagger-ui:
+    try-it-out-enabled: true
+

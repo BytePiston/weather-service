@@ -18,7 +18,7 @@
         <spring.javaformat.version>0.0.40</spring.javaformat.version>
         <springdoc.openapi.version>2.3.0</springdoc.openapi.version>
         <springdoc.openapi.maven.plugin.version>1.4</springdoc.openapi.maven.plugin.version>
-        <api.docs.url>http://localhost:8080/v3/api-docs</api.docs.url>
+        <api.docs.url>http://localhost:80/v3/api-docs</api.docs.url>
 
             <!--        SonarQube properties-->
         <sonar.organization>bytepiston</sonar.organization>
