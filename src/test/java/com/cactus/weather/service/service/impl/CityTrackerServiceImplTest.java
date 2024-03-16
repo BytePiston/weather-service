@@ -1,13 +1,22 @@
 package com.cactus.weather.service.service.impl;
 
-import com.cactus.weather.service.service.impl.CityTrackerServiceImpl;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import com.cactus.weather.service.entity.CitySearchTracker;
 import com.cactus.weather.service.model.response_model.CityTrackerResponse;
 import com.cactus.weather.service.repository.CityTrackerRepository;
+import com.cactus.weather.service.service.impl.CityTrackerServiceImpl;
 import com.cactus.weather.service.util.CityTrackerMode;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,16 +28,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -47,10 +46,8 @@ class CityTrackerServiceImplTest {
     MockitoAnnotations.initMocks(this);
     cityTrackerService = new CityTrackerServiceImpl(cityTrackerRepository);
     allCityTrackerResponse = new ArrayList<>();
-    ArrayNode jsonNode =
-        (ArrayNode)
-            objectMapper.readTree(
-                new File("src/test/resources/weather_data/AllCityTrackerResponse.json"));
+    ArrayNode jsonNode = (ArrayNode)objectMapper.readTree(new File(
+        "src/test/resources/weather_data/AllCityTrackerResponse.json"));
     for (JsonNode node : jsonNode) {
       CitySearchTracker citySearchTracker =
           CitySearchTracker.builder()
@@ -64,9 +61,8 @@ class CityTrackerServiceImplTest {
       allCityTrackerResponse.add(citySearchTracker);
     }
 
-    JsonNode node =
-        objectMapper.readTree(
-            new File("src/test/resources/weather_data/EdmontonCityTrackerResponse.json"));
+    JsonNode node = objectMapper.readTree(new File(
+        "src/test/resources/weather_data/EdmontonCityTrackerResponse.json"));
 
     CitySearchTracker citySearchTracker =
         CitySearchTracker.builder()
@@ -80,7 +76,8 @@ class CityTrackerServiceImplTest {
     Page<CitySearchTracker> page =
         convertArrayListToPage(allCityTrackerResponse, PageRequest.of(0, 3));
     when(cityTrackerRepository.findAll(any(Pageable.class))).thenReturn(page);
-    when(cityTrackerRepository.findById(any())).thenReturn(Optional.of(citySearchTracker));
+    when(cityTrackerRepository.findById(any()))
+        .thenReturn(Optional.of(citySearchTracker));
   }
 
   @Test
@@ -89,19 +86,19 @@ class CityTrackerServiceImplTest {
     cityTrackerService.getAllCityTracker(PageRequest.of(0, 10));
     when(cityTrackerRepository.findById(any()))
         .thenReturn(Optional.of(allCityTrackerResponse.get(0)));
-    Page<CitySearchTracker> page = cityTrackerRepository.findAll(PageRequest.of(0, 3));
+    Page<CitySearchTracker> page =
+        cityTrackerRepository.findAll(PageRequest.of(0, 3));
     List<CityTrackerResponse> cityTrackerResponses = new ArrayList<>();
-    page.forEach(
-        citySearchTracker -> {
-          cityTrackerResponses.add(
-              CityTrackerResponse.builder()
-                  .name(citySearchTracker.getCityName())
-                  .idCount(citySearchTracker.getIdCount())
-                  .nameCount(citySearchTracker.getNameCount())
-                  .zipCodeCount(citySearchTracker.getZipCount())
-                  .totalCounter(citySearchTracker.getTotalCount())
-                  .build());
-        });
+    page.forEach(citySearchTracker -> {
+      cityTrackerResponses.add(
+          CityTrackerResponse.builder()
+              .name(citySearchTracker.getCityName())
+              .idCount(citySearchTracker.getIdCount())
+              .nameCount(citySearchTracker.getNameCount())
+              .zipCodeCount(citySearchTracker.getZipCount())
+              .totalCounter(citySearchTracker.getTotalCount())
+              .build());
+    });
     assertEquals(3, cityTrackerResponses.size());
   }
 
@@ -112,17 +109,16 @@ class CityTrackerServiceImplTest {
         convertArrayListToPage(allCityTrackerResponse, PageRequest.of(0, 1));
     when(cityTrackerRepository.findAll(any(Pageable.class))).thenReturn(page);
     List<CityTrackerResponse> cityTrackerResponses = new ArrayList<>();
-    page.forEach(
-        citySearchTracker -> {
-          cityTrackerResponses.add(
-              CityTrackerResponse.builder()
-                  .name(citySearchTracker.getCityName())
-                  .idCount(citySearchTracker.getIdCount())
-                  .nameCount(citySearchTracker.getNameCount())
-                  .zipCodeCount(citySearchTracker.getZipCount())
-                  .totalCounter(citySearchTracker.getTotalCount())
-                  .build());
-        });
+    page.forEach(citySearchTracker -> {
+      cityTrackerResponses.add(
+          CityTrackerResponse.builder()
+              .name(citySearchTracker.getCityName())
+              .idCount(citySearchTracker.getIdCount())
+              .nameCount(citySearchTracker.getNameCount())
+              .zipCodeCount(citySearchTracker.getZipCount())
+              .totalCounter(citySearchTracker.getTotalCount())
+              .build());
+    });
     assertEquals(1, cityTrackerResponses.size());
   }
 
@@ -148,8 +144,11 @@ class CityTrackerServiceImplTest {
   @DisplayName("Positive Scenario: Increment City Tracker")
   void incrementCityTrackerPositiveScenario() {
     // Verify the initial count
-    assertEquals(12, cityTrackerService.getCityTracker("Edmonton").get().getNameCount());
-    assertEquals(16, cityTrackerService.getCityTracker("Edmonton").get().getTotalCounter());
+    assertEquals(
+        12, cityTrackerService.getCityTracker("Edmonton").get().getNameCount());
+    assertEquals(
+        16,
+        cityTrackerService.getCityTracker("Edmonton").get().getTotalCounter());
 
     cityTrackerService.incrementCityTracker("Edmonton", CityTrackerMode.NAME);
     Optional<CityTrackerResponse> cityTrackerResponse =
@@ -175,8 +174,12 @@ class CityTrackerServiceImplTest {
   @DisplayName("Positive Scenario: Increment City Tracker with Zip Code")
   void incrementCityTrackerPositiveScenarioWithZipCode() {
     // Verify the initial count
-    assertEquals(cityTrackerService.getCityTracker("Edmonton").get().getZipCodeCount(), 0);
-    assertEquals(cityTrackerService.getCityTracker("Edmonton").get().getTotalCounter(), 16);
+    assertEquals(
+        cityTrackerService.getCityTracker("Edmonton").get().getZipCodeCount(),
+        0);
+    assertEquals(
+        cityTrackerService.getCityTracker("Edmonton").get().getTotalCounter(),
+        16);
 
     cityTrackerService.incrementCityTracker("Edmonton", CityTrackerMode.ZIP);
     Optional<CityTrackerResponse> cityTrackerResponse =
@@ -199,8 +202,10 @@ class CityTrackerServiceImplTest {
   }
 
   @Test
-  @DisplayName("Negative Scenario: Get All City Tracker with Invalid Page Number and Page Size")
-  void getAllCityTrackerNegativeScenarioWithInvalidPageInput() {
+  @DisplayName(
+      "Negative Scenario: Get All City Tracker with Invalid Page Number and Page Size")
+  void
+  getAllCityTrackerNegativeScenarioWithInvalidPageInput() {
     assertThrows(
         IllegalArgumentException.class,
         () -> cityTrackerService.getAllCityTracker(PageRequest.of(-1, 10)));
@@ -216,9 +221,9 @@ class CityTrackerServiceImplTest {
   }
 
   // Helper method to convert List to Page
-  public static Page<CitySearchTracker> convertArrayListToPage(
-      List<CitySearchTracker> list, Pageable pageable) {
-    int start = (int) pageable.getOffset();
+  public static Page<CitySearchTracker>
+  convertArrayListToPage(List<CitySearchTracker> list, Pageable pageable) {
+    int start = (int)pageable.getOffset();
     int end = Math.min((start + pageable.getPageSize()), list.size());
     List<CitySearchTracker> subList = list.subList(start, end);
     long totalElements = list.size();

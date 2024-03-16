@@ -13,8 +13,7 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 public class WebConfiguration {
 
-  @Value("${openweathermap.api.key}")
-  private String openWeatherMapApiKey;
+  @Value("${openweathermap.api.key}") private String openWeatherMapApiKey;
 
   @Bean
   public RestTemplate restTemplate() {
@@ -22,11 +21,12 @@ public class WebConfiguration {
   }
 
   /**
-   * ************************************************************************************* This is
-   * the configuration for the cache that stores the weather data for a query URL as the key and the
-   * Pair as the value. The Pair represents a key-value pair of TTL and WeatherResponse. TTL is
-   * calculated in milliseconds based on the generated time of the weather data + 10 minutes as
-   * refresh data time specified by OpenWeatherMapAPI Docs.
+   * *************************************************************************************
+   * This is the configuration for the cache that stores the weather data for a
+   * query URL as the key and the Pair as the value. The Pair represents a
+   * key-value pair of TTL and WeatherResponse. TTL is calculated in
+   * milliseconds based on the generated time of the weather data + 10 minutes
+   * as refresh data time specified by OpenWeatherMapAPI Docs.
    * ************************************************************************************
    */
   @Bean

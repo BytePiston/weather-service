@@ -13,7 +13,9 @@ public class EitherIdOrNamePresentValidator
   }
 
   @Override
-  public boolean isValid(CityRequestModel cityRequestModel, ConstraintValidatorContext context) {
-    return cityRequestModel.getId() != null || cityRequestModel.getName() != null;
+  public boolean isValid(CityRequestModel cityRequestModel,
+                         ConstraintValidatorContext context) {
+    return cityRequestModel.getId() != null ||
+        cityRequestModel.getName() != null;
   }
 }
