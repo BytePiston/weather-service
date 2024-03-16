@@ -15,7 +15,6 @@
     <description>Application that allows users to retrieve current weather conditions by city name, zip code, or coordinates using the OpenWeatherMap API.</description>
     <properties>
         <java.version>17</java.version>
-        <spring.javaformat.version>0.0.40</spring.javaformat.version>
         <springdoc.openapi.version>2.3.0</springdoc.openapi.version>
         <springdoc.openapi.maven.plugin.version>1.4</springdoc.openapi.maven.plugin.version>
         <api.docs.url>http://localhost:80/v3/api-docs</api.docs.url>
@@ -24,11 +23,7 @@
         <sonar.organization>bytepiston</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <jacoco.version>0.8.11</jacoco.version>
-        <sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
-        <sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
-        <sonar.jacoco.xmlReportPaths>${project.basedir}/../target/site/jacoco/jacoco.xml</sonar.jacoco.xmlReportPaths>
         <sonar.language>java</sonar.language>
-        <sonar.jacoco.plugin>1.3.0.1538</sonar.jacoco.plugin>
         <sonar.maven.plugin.version>3.10.0.2594</sonar.maven.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
         <sonar.exclusions>
@@ -96,11 +91,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-docker-compose</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.sonarsource.jacoco</groupId>
-            <artifactId>sonar-jacoco-plugin</artifactId>
-            <version>${sonar.jacoco.plugin}</version>
-        </dependency>
     </dependencies>
 
     <build>
@@ -117,19 +107,6 @@
                         </exclude>
                     </excludes>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>io.spring.javaformat</groupId>
-                <artifactId>spring-javaformat-maven-plugin</artifactId>
-                <version>${spring.javaformat.version}</version>
-                <executions>
-                    <execution>
-                        <inherited>true</inherited>
-                        <goals>
-                            <goal>apply</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
             <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
