@@ -74,7 +74,8 @@ class WeatherServiceImplTest {
 	@DisplayName("Positive Scenario: Fetch Weather By City Id")
 	void testGetCurrentWeatherByCityIdPositiveScenario() throws ResourceNotFoundException {
 		Optional<WeatherResponse> weatherResponseOptional = weatherServiceImpl.getCurrentWeatherByCityId("1234567890");
-		WeatherResponse weatherResponse = weatherResponseOptional.get();
+        assertTrue(weatherResponseOptional.isPresent());
+        WeatherResponse weatherResponse = weatherResponseOptional.get();
 		assertNotNull(weatherResponse);
 		assertEquals(STATUS_SUCCESS, weatherResponse.getMessage());
 		assertNotNull(weatherResponse.getCurrentWeather());
@@ -96,6 +97,7 @@ class WeatherServiceImplTest {
     void testGetCurrentWeatherByCityNamePositiveScenario() throws ResourceNotFoundException {
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(beverlyWeatherData);
         Optional<WeatherResponse> weatherResponseOptional = weatherServiceImpl.getCurrentWeatherByCityName("Beverly Hills");
+        assertTrue(weatherResponseOptional.isPresent());
         WeatherResponse weatherResponse = weatherResponseOptional.get();
         assertNotNull(weatherResponse);
         assertEquals(STATUS_SUCCESS, weatherResponse.getMessage());
@@ -118,6 +120,7 @@ class WeatherServiceImplTest {
     void testGetCurrentWeatherByCityNameAndCountryCodePositiveScenario() throws ResourceNotFoundException {
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(quanticoWeatherData);
         Optional<WeatherResponse> weatherResponseOptional = weatherServiceImpl.getCurrentWeatherByCityNameAndCountryCode("Quantico", "US");
+        assertTrue(weatherResponseOptional.isPresent());
         WeatherResponse weatherResponse = weatherResponseOptional.get();
         assertNotNull(weatherResponse);
         assertEquals(STATUS_SUCCESS, weatherResponse.getMessage());
@@ -140,6 +143,7 @@ class WeatherServiceImplTest {
     void testGetCurrentWeatherByCityNameAndStateCodeAndCountryCodePositiveScenario() throws ResourceNotFoundException {
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(quanticoWeatherData);
         Optional<WeatherResponse> weatherResponseOptional = weatherServiceImpl.getCurrentWeatherByCityNameAndStateCodeAndCountryCode("Quantico", "VA", "US");
+        assertTrue(weatherResponseOptional.isPresent());
         WeatherResponse weatherResponse = weatherResponseOptional.get();
         assertNotNull(weatherResponse);
         assertEquals(STATUS_SUCCESS, weatherResponse.getMessage());
@@ -162,6 +166,7 @@ class WeatherServiceImplTest {
     void testGetCurrentWeatherByZipCodePositiveScenario() throws ResourceNotFoundException {
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(naplesWeatherData);
         Optional<WeatherResponse> weatherResponseOptional = weatherServiceImpl.getCurrentWeatherByZipCode("34102");
+        assertTrue(weatherResponseOptional.isPresent());
         WeatherResponse weatherResponse = weatherResponseOptional.get();
         assertNotNull(weatherResponse);
         assertEquals(STATUS_SUCCESS, weatherResponse.getMessage());
@@ -184,6 +189,7 @@ class WeatherServiceImplTest {
     void testGetCurrentWeatherByZipCodeAndCountryCodePositiveScenario() throws ResourceNotFoundException {
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(naplesWeatherData);
         Optional<WeatherResponse> weatherResponseOptional = weatherServiceImpl.getCurrentWeatherByZipCodeAndCountryCode("34102", "US");
+        assertTrue(weatherResponseOptional.isPresent());
         WeatherResponse weatherResponse = weatherResponseOptional.get();
                 assertNotNull(weatherResponse);
         assertEquals(STATUS_SUCCESS, weatherResponse.getMessage());
@@ -206,6 +212,7 @@ class WeatherServiceImplTest {
     void testGetCurrentWeatherByCoordinatesPositiveScenario() throws ResourceNotFoundException {
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(naplesWeatherData);
         Optional<WeatherResponse> weatherResponseOptional = weatherServiceImpl.getCurrentWeatherByCoordinates(26.142, -81.7948);
+        assertTrue(weatherResponseOptional.isPresent());
         WeatherResponse weatherResponse = weatherResponseOptional.get();
         assertNotNull(weatherResponse);
         assertEquals(STATUS_SUCCESS, weatherResponse.getMessage());

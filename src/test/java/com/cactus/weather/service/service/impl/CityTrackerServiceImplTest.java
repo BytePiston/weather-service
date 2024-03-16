@@ -119,6 +119,7 @@ class CityTrackerServiceImplTest {
 	@DisplayName("Positive Scenario: Get City Tracker")
 	void getCityTrackerPositiveScenario() {
 		Optional<CityTrackerResponse> cityTrackerResponse = cityTrackerService.getCityTracker("Edmonton");
+		assertTrue(cityTrackerResponse.isPresent());
 		assertEquals(cityTrackerResponse.get().getName(), "Edmonton");
 	}
 
@@ -141,6 +142,7 @@ class CityTrackerServiceImplTest {
 		Optional<CityTrackerResponse> cityTrackerResponse = cityTrackerService.getCityTracker("Edmonton");
 
 		// Verify the incremented count
+		assertTrue(cityTrackerResponse.isPresent());
 		assertEquals(13, cityTrackerResponse.get().getNameCount());
 		assertEquals(17, cityTrackerResponse.get().getTotalCounter());
 	}
@@ -165,6 +167,7 @@ class CityTrackerServiceImplTest {
 		Optional<CityTrackerResponse> cityTrackerResponse = cityTrackerService.getCityTracker("Edmonton");
 
 		// Verify the incremented count
+		assertTrue(cityTrackerResponse.isPresent());
 		assertEquals(1, cityTrackerResponse.get().getZipCodeCount());
 		assertEquals(17, cityTrackerResponse.get().getTotalCounter());
 	}
