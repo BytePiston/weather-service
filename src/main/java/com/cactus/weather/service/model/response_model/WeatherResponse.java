@@ -13,8 +13,7 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WeatherResponse {
 
-	WeatherModel currentWeather;
+  WeatherModel currentWeather;
 
-	String message;
-
+  String message;
 }
