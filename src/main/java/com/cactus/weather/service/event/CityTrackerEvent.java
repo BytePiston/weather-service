@@ -9,14 +9,13 @@ import org.springframework.context.ApplicationEvent;
 @Setter
 public class CityTrackerEvent extends ApplicationEvent {
 
-	private final String cityName;
+  private final String cityName;
 
-	private final CityTrackerMode mode;
+  private final CityTrackerMode mode;
 
-	public CityTrackerEvent(String cityName, CityTrackerMode mode) {
-		super(cityName);
-		this.cityName = cityName;
-		this.mode = mode;
-	}
-
+  public CityTrackerEvent(String cityName, CityTrackerMode mode) {
+    super(cityName);
+    this.cityName = cityName;
+    this.mode = mode;
+  }
 }

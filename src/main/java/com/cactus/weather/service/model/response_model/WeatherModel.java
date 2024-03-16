@@ -2,12 +2,11 @@ package com.cactus.weather.service.model.response_model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -16,146 +15,135 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class WeatherModel {
 
-	private Coord coord;
+  private Coord coord;
 
-	private List<Weather> weather;
+  private List<Weather> weather;
 
-	private String base;
+  private String base;
 
-	private Main main;
+  private Main main;
 
-	private Integer visibility;
+  private Integer visibility;
 
-	private Wind wind;
+  private Wind wind;
 
-	private Rain rain;
+  private Rain rain;
 
-	private Clouds clouds;
+  private Clouds clouds;
 
-	private Long dt;
+  private Long dt;
 
-	private Sys sys;
+  private Sys sys;
 
-	private Long timezone;
+  private Long timezone;
 
-	private Long id;
+  private Long id;
 
-	private String name;
+  private String name;
 
-	private Integer cod;
+  private Integer cod;
 
-	@Data
-	@Builder
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	public static class Coord {
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public static class Coord {
 
-		private Double lon;
+    private Double lon;
 
-		private Double lat;
+    private Double lat;
+  }
 
-	}
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public static class Weather {
 
-	@Data
-	@Builder
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	public static class Weather {
+    private Integer id;
 
-		private Integer id;
+    private String main;
 
-		private String main;
+    private String description;
 
-		private String description;
+    private String icon;
+  }
 
-		private String icon;
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public static class Main {
 
-	}
+    private Double temp;
 
-	@Data
-	@Builder
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	public static class Main {
+    private Double feels_like;
 
-		private Double temp;
+    private Double temp_min;
 
-		private Double feels_like;
+    private Double temp_max;
 
-		private Double temp_min;
+    private Integer pressure;
 
-		private Double temp_max;
+    private Integer humidity;
 
-		private Integer pressure;
+    @JsonProperty("sea_level") private Integer seaLevel;
 
-		private Integer humidity;
+    @JsonProperty("grnd_level") private Integer grndLevel;
+  }
 
-		@JsonProperty("sea_level")
-		private Integer seaLevel;
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public static class Wind {
 
-		@JsonProperty("grnd_level")
-		private Integer grndLevel;
+    private Double speed;
 
-	}
+    private Integer deg;
 
-	@Data
-	@Builder
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	public static class Wind {
+    private Double gust;
+  }
 
-		private Double speed;
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public static class Rain {
 
-		private Integer deg;
+    @JsonProperty("1h") private Double _1h;
+  }
 
-		private Double gust;
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public static class Clouds {
 
-	}
+    private Integer all;
+  }
 
-	@Data
-	@Builder
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	public static class Rain {
+  @Data
+  @Builder
+  @NoArgsConstructor
+  @AllArgsConstructor
+  @JsonInclude(JsonInclude.Include.NON_NULL)
+  public static class Sys {
 
-		@JsonProperty("1h")
-		private Double _1h;
+    private Integer type;
 
-	}
+    private Integer id;
 
-	@Data
-	@Builder
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	public static class Clouds {
+    private String country;
 
-		private Integer all;
+    private Integer sunrise;
 
-	}
-
-	@Data
-	@Builder
-	@NoArgsConstructor
-	@AllArgsConstructor
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	public static class Sys {
-
-		private Integer type;
-
-		private Integer id;
-
-		private String country;
-
-		private Integer sunrise;
-
-		private Integer sunset;
-
-	}
-
+    private Integer sunset;
+  }
 }

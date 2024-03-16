@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ZipCodeRequestModel {
 
-	@NotBlank(message = "Zip code cannot be blank")
-	@Pattern(regexp = "^[a-zA-Z0-9]{1,10}$", message = "Invalid Zip code format")
-	private String zipCode;
+  @NotBlank(message = "Zip code cannot be blank")
+  @Pattern(regexp = "^[a-zA-Z0-9]{1,10}$", message = "Invalid Zip code format")
+  private String zipCode;
 
-	@Pattern(regexp = "^[a-zA-Z]{2}$", message = "Country code must be a two-letter code")
-	private String countryCode;
-
+  @Pattern(regexp = "^[a-zA-Z]{2}$",
+           message = "Country code must be a two-letter code")
+  private String countryCode;
 }
