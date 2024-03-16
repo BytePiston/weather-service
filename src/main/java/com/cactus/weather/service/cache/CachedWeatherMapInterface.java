@@ -16,15 +16,6 @@ public interface CachedWeatherMapInterface extends Map<String, Pair<Long, Weathe
 	void cacheWeatherData(String currentWeatherQueryUrl, WeatherResponse weatherResponse);
 
 	/**
-	 * Puts a new pair of TTL and weather data into the cache map.
-	 * @param currentWeatherQueryUrl the query URL for the current weather data
-	 * @param pair the pair of TTL and weather data to be put into the cache
-	 * @return the previous value associated with the key, or null if there was no mapping
-	 * for the key
-	 */
-	Pair<Long, WeatherResponse> put(String currentWeatherQueryUrl, Pair<Long, WeatherResponse> pair);
-
-	/**
 	 * Retrieves the pair of TTL and weather data from the cache map for a specific query
 	 * URL. If the TTL has expired, the pair is removed from the cache and null is
 	 * returned.

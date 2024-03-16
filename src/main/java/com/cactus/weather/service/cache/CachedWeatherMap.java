@@ -23,11 +23,11 @@ public class CachedWeatherMap extends ConcurrentHashMap<String, Pair<Long, Weath
 		put(currentWeatherQueryUrl, Pair.of(ttl, weatherResponse));
 	}
 
-	@Override
-	public Pair<Long, WeatherResponse> put(String currentWeatherQueryUrl, Pair<Long, WeatherResponse> pair) {
-		//TODO: Created for future use; In case we need extra logic to be added before putting;
-		return super.put(currentWeatherQueryUrl, pair);
-	}
+//	@Override
+//	public Pair<Long, WeatherResponse> put(String currentWeatherQueryUrl, Pair<Long, WeatherResponse> pair) {
+//		//TODO: Created for future use; In case we need extra logic to be added before putting;
+//		return super.put(currentWeatherQueryUrl, pair);
+//	}
 
 	// First check if the currentWeatherQueryUrl is present and the TTL has not expired;
 	// If the TTL has expired, remove the pairFromCache from the cache and return null;
