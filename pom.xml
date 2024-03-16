@@ -8,7 +8,7 @@
         <version>3.2.3</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.verdant</groupId>
+    <groupId>com.cactus</groupId>
     <artifactId>weather-service</artifactId>
     <version>1.0.0</version>
     <name>weather-service</name>
