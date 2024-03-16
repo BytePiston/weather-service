@@ -18,7 +18,6 @@
         <springdoc.openapi.version>2.3.0</springdoc.openapi.version>
         <springdoc.openapi.maven.plugin.version>1.4</springdoc.openapi.maven.plugin.version>
         <api.docs.url>http://localhost:80/v3/api-docs</api.docs.url>
-        <googleformatter-maven-plugin.version>1.7.5</googleformatter-maven-plugin.version>
 
             <!--        SonarQube properties-->
         <sonar.organization>bytepiston</sonar.organization>
@@ -152,31 +151,6 @@
                     <outputFileName>api-documentation.yml</outputFileName>
                     <outputDir>open-api-doc</outputDir>
                 </configuration>
-            </plugin>
-
-            <plugin>
-                <groupId>com.theoryinpractise</groupId>
-                <artifactId>googleformatter-maven-plugin</artifactId>
-                <version>${googleformatter-maven-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>reformat-sources</id>
-                        <configuration>
-                            <includeStale>false</includeStale>
-                            <style>GOOGLE</style>
-                            <formatMain>true</formatMain>
-                            <formatTest>true</formatTest>
-                            <filterModified>false</filterModified>
-                            <skip>false</skip>
-                            <fixImports>false</fixImports>
-                            <maxLineLength>100</maxLineLength>
-                        </configuration>
-                        <goals>
-                            <goal>format</goal>
-                        </goals>
-                        <phase>process-sources</phase>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
