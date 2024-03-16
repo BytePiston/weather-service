@@ -7,14 +7,13 @@ import java.lang.annotation.*;
 
 @Documented
 @Constraint(validatedBy = EitherIdOrNamePresentValidator.class)
-@Target({ ElementType.TYPE })
+@Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface EitherIdOrNamePresent {
 
-	String message() default "City ID or City name is required";
+  String message() default "City ID or City name is required";
 
-	Class<?>[] groups() default {};
+  Class<?>[] groups() default {};
 
-	Class<? extends Payload>[] payload() default {};
-
+  Class<? extends Payload>[] payload() default {};
 }

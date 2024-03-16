@@ -13,18 +13,17 @@ import lombok.NoArgsConstructor;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class CityTrackerResponse {
 
-	String name;
+  String name;
 
-	Long idCount;
+  Long idCount;
 
-	Long coordinateCount;
+  Long coordinateCount;
 
-	Long nameCount;
+  Long nameCount;
 
-	Long zipCodeCount;
+  Long zipCodeCount;
 
-	Long totalCounter;
+  Long totalCounter;
 
-	String message;
-
+  String message;
 }

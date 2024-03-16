@@ -33,92 +33,98 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(SearchTrackerController.class)
 class SearchTrackerControllerTest {
 
-	@MockBean
-	private CityTrackerService cityTrackerService;
+  @MockBean private CityTrackerService cityTrackerService;
 
-	@Autowired
-	private MockMvc mockMvc;
+  @Autowired private MockMvc mockMvc;
 
-	private static List<CityTrackerResponse> allCityTrackerResponse;
+  private static List<CityTrackerResponse> allCityTrackerResponse;
 
-	private static Optional<CityTrackerResponse> edmontonCityTrackerResponse;
+  private static Optional<CityTrackerResponse> edmontonCityTrackerResponse;
 
-	private static final ObjectMapper objectMapper = new ObjectMapper();
+  private static final ObjectMapper objectMapper = new ObjectMapper();
 
-	@BeforeAll
-	public static void setUp() throws IOException {
-		allCityTrackerResponse = objectMapper.readValue(
-				new File("src/test/resources/weather_data/AllCityTrackerResponse.json"),
-				objectMapper.getTypeFactory().constructCollectionType(List.class, CityTrackerResponse.class));
+  @BeforeAll
+  public static void setUp() throws IOException {
+    allCityTrackerResponse =
+        objectMapper.readValue(
+            new File("src/test/resources/weather_data/AllCityTrackerResponse.json"),
+            objectMapper
+                .getTypeFactory()
+                .constructCollectionType(List.class, CityTrackerResponse.class));
 
-		edmontonCityTrackerResponse = Optional
-			.of(objectMapper.readValue(new File("src/test/resources/weather_data/EdmontonCityTrackerResponse.json"),
-					CityTrackerResponse.class));
-	}
+    edmontonCityTrackerResponse =
+        Optional.of(
+            objectMapper.readValue(
+                new File("src/test/resources/weather_data/EdmontonCityTrackerResponse.json"),
+                CityTrackerResponse.class));
+  }
 
-	@Test
-    @DisplayName("Positive Scenario: Get All City Tracker without Pagination; Exception Handling")
-    void getAllCityTrackerWithoutPageSizeExceptionHandlingPositive() throws Exception {
-        when(cityTrackerService.getAllCityTracker(PageRequest.of(0, 5))).thenThrow(ParameterValidationException.class);
-        //Store returned value from mockmvc and parse the result;
-        mockMvc.perform(get("/api/v1/tracker/city")).andExpect(status().isOk());
-    }
+  @Test
+  @DisplayName("Positive Scenario: Get All City Tracker without Pagination; Exception Handling")
+  void getAllCityTrackerWithoutPageSizeExceptionHandlingPositive() throws Exception {
+    when(cityTrackerService.getAllCityTracker(PageRequest.of(0, 5)))
+        .thenThrow(ParameterValidationException.class);
+    // Store returned value from mockmvc and parse the result;
+    mockMvc.perform(get("/api/v1/tracker/city")).andExpect(status().isOk());
+  }
 
-	@Test
-    @DisplayName("Positive Scenario: Get all city search tracker by page number and page size")
-    void getAllCityTrackerWithPageSizePositive() throws Exception {
-        when(cityTrackerService.getAllCityTracker(PageRequest.of(0, 3))).thenReturn(allCityTrackerResponse);
-        //Store returned value from mockmvc and parse the result;
-        ResultActions resultActions = mockMvc.perform(get("/api/v1/tracker/city?page=0&pageSize=3"));
-        MvcResult result = resultActions.andDo(MockMvcResultHandlers.print()).andReturn();
-        String content = result.getResponse().getContentAsString();
-        JsonNode node = objectMapper.readTree(content);
-        assertTrue(node.isArray());
-        assertEquals(3, node.size());
-        assertEquals("Edmonton", node.get(0).get("name").asText());
-        assertEquals("Hudson", node.get(1).get("name").asText());
-        assertEquals("Leitchfield", node.get(2).get("name").asText());
-    }
+  @Test
+  @DisplayName("Positive Scenario: Get all city search tracker by page number and page size")
+  void getAllCityTrackerWithPageSizePositive() throws Exception {
+    when(cityTrackerService.getAllCityTracker(PageRequest.of(0, 3)))
+        .thenReturn(allCityTrackerResponse);
+    // Store returned value from mockmvc and parse the result;
+    ResultActions resultActions = mockMvc.perform(get("/api/v1/tracker/city?page=0&pageSize=3"));
+    MvcResult result = resultActions.andDo(MockMvcResultHandlers.print()).andReturn();
+    String content = result.getResponse().getContentAsString();
+    JsonNode node = objectMapper.readTree(content);
+    assertTrue(node.isArray());
+    assertEquals(3, node.size());
+    assertEquals("Edmonton", node.get(0).get("name").asText());
+    assertEquals("Hudson", node.get(1).get("name").asText());
+    assertEquals("Leitchfield", node.get(2).get("name").asText());
+  }
 
-	@Test
-    @DisplayName("Positive Scenario: Get all city search tracker by city name")
-    void getAllCityTrackerByCityNamePositive() throws Exception {
-        when(cityTrackerService.getCityTracker("Edmonton")).thenReturn(edmontonCityTrackerResponse);
-        //Store returned value from mockmvc and parse the result;
-        ResultActions resultActions = mockMvc.perform(get("/api/v1/tracker/city?name=Edmonton&page=0&pageSize=3"));
-        MvcResult result = resultActions.andDo(MockMvcResultHandlers.print()).andReturn();
-        String content = result.getResponse().getContentAsString();
-        JsonNode node = objectMapper.readTree(content);
-        assertTrue(node.isArray());
-        assertEquals(1, node.size());
-        assertEquals("Edmonton", node.get(0).get("name").asText());
-    }
+  @Test
+  @DisplayName("Positive Scenario: Get all city search tracker by city name")
+  void getAllCityTrackerByCityNamePositive() throws Exception {
+    when(cityTrackerService.getCityTracker("Edmonton")).thenReturn(edmontonCityTrackerResponse);
+    // Store returned value from mockmvc and parse the result;
+    ResultActions resultActions =
+        mockMvc.perform(get("/api/v1/tracker/city?name=Edmonton&page=0&pageSize=3"));
+    MvcResult result = resultActions.andDo(MockMvcResultHandlers.print()).andReturn();
+    String content = result.getResponse().getContentAsString();
+    JsonNode node = objectMapper.readTree(content);
+    assertTrue(node.isArray());
+    assertEquals(1, node.size());
+    assertEquals("Edmonton", node.get(0).get("name").asText());
+  }
 
-	@Test
-    @DisplayName("Negative Scenario: Get city search tracker by city name")
-    void getAllCityTrackerByCityNameNegative() throws Exception {
-        when(cityTrackerService.getCityTracker("Edmonton")).thenReturn(Optional.empty());
-        //Store returned value from mockmvc and parse the result;
-        ResultActions resultActions = mockMvc.perform(get("/api/v1/tracker/city?name=Edmonton&page=0&pageSize=3"));
-        MvcResult result = resultActions.andDo(MockMvcResultHandlers.print()).andReturn();
-        String content = result.getResponse().getContentAsString();
-        JsonNode node = objectMapper.readTree(content);
-        assertTrue(node.isArray());
-        assertEquals(1, node.size());
-        assertEquals("City Not Found", node.get(0).get("message").asText());
-    }
+  @Test
+  @DisplayName("Negative Scenario: Get city search tracker by city name")
+  void getAllCityTrackerByCityNameNegative() throws Exception {
+    when(cityTrackerService.getCityTracker("Edmonton")).thenReturn(Optional.empty());
+    // Store returned value from mockmvc and parse the result;
+    ResultActions resultActions =
+        mockMvc.perform(get("/api/v1/tracker/city?name=Edmonton&page=0&pageSize=3"));
+    MvcResult result = resultActions.andDo(MockMvcResultHandlers.print()).andReturn();
+    String content = result.getResponse().getContentAsString();
+    JsonNode node = objectMapper.readTree(content);
+    assertTrue(node.isArray());
+    assertEquals(1, node.size());
+    assertEquals("City Not Found", node.get(0).get("message").asText());
+  }
 
-	@Test
-    @DisplayName("Negative Scenario: Get all city search tracker by page number and page size")
-    void getAllCityTrackerWithPageSizeNegative() throws Exception {
-        when(cityTrackerService.getAllCityTracker(PageRequest.of(0, 3))).thenReturn(new ArrayList<>());
-        //Store returned value from mockmvc and parse the result;
-        ResultActions resultActions = mockMvc.perform(get("/api/v1/tracker/city?page=0&pageSize=3"));
-        MvcResult result = resultActions.andDo(MockMvcResultHandlers.print()).andReturn();
-        String content = result.getResponse().getContentAsString();
-        JsonNode node = objectMapper.readTree(content);
-        assertTrue(node.isArray());
-        assertEquals(0, node.size());
-    }
-
+  @Test
+  @DisplayName("Negative Scenario: Get all city search tracker by page number and page size")
+  void getAllCityTrackerWithPageSizeNegative() throws Exception {
+    when(cityTrackerService.getAllCityTracker(PageRequest.of(0, 3))).thenReturn(new ArrayList<>());
+    // Store returned value from mockmvc and parse the result;
+    ResultActions resultActions = mockMvc.perform(get("/api/v1/tracker/city?page=0&pageSize=3"));
+    MvcResult result = resultActions.andDo(MockMvcResultHandlers.print()).andReturn();
+    String content = result.getResponse().getContentAsString();
+    JsonNode node = objectMapper.readTree(content);
+    assertTrue(node.isArray());
+    assertEquals(0, node.size());
+  }
 }

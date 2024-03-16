@@ -11,17 +11,19 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CityTrackerEventListener implements ApplicationListener<CityTrackerEvent> {
 
-	private final CityTrackerService cityTrackerService;
+  private final CityTrackerService cityTrackerService;
 
-	@Autowired
-	public CityTrackerEventListener(CityTrackerService cityTrackerService) {
-		this.cityTrackerService = cityTrackerService;
-	}
+  @Autowired
+  public CityTrackerEventListener(CityTrackerService cityTrackerService) {
+    this.cityTrackerService = cityTrackerService;
+  }
 
-	@Override
-	public void onApplicationEvent(CityTrackerEvent event) {
-		log.debug("Received city tracker event for city: {} and mode: {}", event.getCityName(), event.getMode());
-		cityTrackerService.incrementCityTracker(event.getCityName(), event.getMode());
-	}
-
+  @Override
+  public void onApplicationEvent(CityTrackerEvent event) {
+    log.debug(
+        "Received city tracker event for city: {} and mode: {}",
+        event.getCityName(),
+        event.getMode());
+    cityTrackerService.incrementCityTracker(event.getCityName(), event.getMode());
+  }
 }

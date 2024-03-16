@@ -9,10 +9,9 @@ import java.util.Optional;
 
 public interface CityTrackerService {
 
-	List<CityTrackerResponse> getAllCityTracker(Pageable pageable);
+  List<CityTrackerResponse> getAllCityTracker(Pageable pageable);
 
-	Optional<CityTrackerResponse> getCityTracker(String cityName);
+  Optional<CityTrackerResponse> getCityTracker(String cityName);
 
-	void incrementCityTracker(String cityName, CityTrackerMode mode);
-
+  void incrementCityTracker(String cityName, CityTrackerMode mode);
 }

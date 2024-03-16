@@ -15,21 +15,22 @@ import java.util.List;
 @OpenAPIDefinition
 public class OpenAPIConfiguration {
 
-	@Bean
-	public OpenAPI defineOpenApi() {
-		Server server = new Server();
-		server.setUrl("http://bytemetwice.ninja");
-		server.setDescription("Development");
+  @Bean
+  public OpenAPI defineOpenApi() {
+    Server server = new Server();
+    server.setUrl("http://bytemetwice.ninja");
+    server.setDescription("Development");
 
-		Contact myContact = new Contact();
-		myContact.setName("Neel Priyadarshi");
-		myContact.setEmail("neel.priyadarshi18@gmail.com");
+    Contact myContact = new Contact();
+    myContact.setName("Neel Priyadarshi");
+    myContact.setEmail("neel.priyadarshi18@gmail.com");
 
-		Info information = new Info().title("Weather Service API Documentation")
-			.version("1.0")
-			.description("API endpoints to query weather using OpenWeatherMap API.")
-			.contact(myContact);
-		return new OpenAPI().info(information).servers(List.of(server));
-	}
-
+    Info information =
+        new Info()
+            .title("Weather Service API Documentation")
+            .version("1.0")
+            .description("API endpoints to query weather using OpenWeatherMap API.")
+            .contact(myContact);
+    return new OpenAPI().info(information).servers(List.of(server));
+  }
 }
