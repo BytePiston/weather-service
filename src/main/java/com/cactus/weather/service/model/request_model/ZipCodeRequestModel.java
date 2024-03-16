@@ -15,6 +15,7 @@ public class ZipCodeRequestModel {
   @Pattern(regexp = "^[a-zA-Z0-9]{1,10}$", message = "Invalid Zip code format")
   private String zipCode;
 
-  @Pattern(regexp = "^[a-zA-Z]{2}$", message = "Country code must be a two-letter code")
+  @Pattern(regexp = "^[a-zA-Z]{2}$",
+           message = "Country code must be a two-letter code")
   private String countryCode;
 }

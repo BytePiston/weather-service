@@ -1,12 +1,11 @@
 package com.cactus.weather.service.entity;
 
 import jakarta.persistence.*;
+import java.io.Serializable;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.io.Serializable;
 
 @Entity
 @Data
@@ -15,9 +14,7 @@ import java.io.Serializable;
 @Builder
 public class CitySearchTracker implements Serializable {
 
-  @Id
-  @Column(nullable = false)
-  private String cityName;
+  @Id @Column(nullable = false) private String cityName;
 
   private Long nameCount;
 

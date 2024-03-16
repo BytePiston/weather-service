@@ -2,12 +2,11 @@ package com.cactus.weather.service.model.response_model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -91,11 +90,9 @@ public class WeatherModel {
 
     private Integer humidity;
 
-    @JsonProperty("sea_level")
-    private Integer seaLevel;
+    @JsonProperty("sea_level") private Integer seaLevel;
 
-    @JsonProperty("grnd_level")
-    private Integer grndLevel;
+    @JsonProperty("grnd_level") private Integer grndLevel;
   }
 
   @Data
@@ -119,8 +116,7 @@ public class WeatherModel {
   @JsonInclude(JsonInclude.Include.NON_NULL)
   public static class Rain {
 
-    @JsonProperty("1h")
-    private Double _1h;
+    @JsonProperty("1h") private Double _1h;
   }
 
   @Data
